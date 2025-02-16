@@ -1,11 +1,18 @@
 import { Component, computed, inject, Signal, signal, WritableSignal } from '@angular/core';
 import { APP_VERSION } from './app.config';
+import { SelectComponent } from './select/select.component';
+
+export interface IOptions {
+  key: string,
+  label: string
+}
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [SelectComponent],
   template: `
       <p>{{inputValue()}}</p>
+      <app-select [options]="options()"></app-select>
       <input type="text" [value]="inputValue()" (input)="inputValue.set($any($event.target).value)">
       <p>{{placeHolder()}}</p>
   `,
@@ -16,6 +23,11 @@ export class AppComponent {
   version = inject(APP_VERSION);
 
   public inputValue: WritableSignal<string> = signal('');
+
+  public options: WritableSignal<IOptions[]> = signal([
+    {key:'p1', label:'option 1'},
+    {key:'p2', label:'option 2'}
+  ])
 
   public placeHolder: Signal<string> = computed(() => {
     const input: string = this.inputValue();
