@@ -1,8 +1,9 @@
-# Angular19
+# Angular Review
 
-Montée en compétence des nouveautés depuis Angular 17-19 et revue des concepts important de l'outil
+This repository reviews all the new features / Api / tools that comes up with the last version of Angular (17 to 19).
+It also focuses on important part and tools of the framework.
 
-Chaque thématiqué est représenté par une branche du dépot.
+Each theme is represented by a branch.
 
 ### Signals
 
@@ -13,6 +14,8 @@ linkedSignal()
 model()
 
 ### Component harness test
+
+Introduction to the concept by using material's component harness
 
 ### @defer
 
