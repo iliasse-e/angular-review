@@ -9,6 +9,8 @@ Each theme is represented by a branch.
 
 computed()
 
+effect()
+
 linkedSignal()
 
 model()
@@ -22,5 +24,9 @@ Introduction to the concept by using material's component harness
 ### API Resource
 
 ### Dependancy injection
+
+### Routing
+
+### Forms
 
 ### Autre
