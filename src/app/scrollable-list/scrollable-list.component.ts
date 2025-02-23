@@ -1,4 +1,4 @@
-import { Component, input, InputSignal, output, Output } from '@angular/core';
+import { Component, input, InputSignal, output } from '@angular/core';
 import { Product } from '../app.component';
 
 @Component({
@@ -21,10 +21,9 @@ import { Product } from '../app.component';
           </div>
         }
   `,
-  styleUrl: './scrollable-list.component.css'
 })
 export class ScrollableListComponent {
-  
+
   public elements: InputSignal<Product[]> = input.required<Product[]>();
 
   public clickEvent = output<string | undefined>();

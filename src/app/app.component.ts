@@ -102,11 +102,6 @@ export class AppComponent {
       .subscribe()
     })
 
-    effect(() => {
-      console.log('quantity parent : ', this.quantity());
-      
-    })
-
   }
   
 }
