@@ -3,9 +3,10 @@ import { Observable, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { fromFetch } from 'rxjs/fetch';
 import { FormsModule } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ScrollableListComponent } from "./scrollable-list/scrollable-list.component";
+import { QuantityInputComponent } from "./quantity-input/quantity-input.component";
 
-interface Product {
+export interface Product {
   id: string,
   price: number,
   title: string,
@@ -16,15 +17,15 @@ interface Product {
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, FormsModule],
+  imports: [AsyncPipe, FormsModule, ScrollableListComponent, QuantityInputComponent],
   template: `
       <section id="product-bloc">
         <div>
           <label for="select-products">
             Select your product
-            <select 
-              [ngModel]="selectedProduct()" 
-              name="select-products" 
+            <select
+              [ngModel]="selectedProduct()"
+              name="select-products"
               id="select-products"
               (ngModelChange)="selectedProduct.set($event)"
             >
@@ -38,7 +39,7 @@ interface Product {
         <br>
         <label for="quantity">
           Quantity
-          <input name="quantity" type="number" [ngModel]="quantity()" (ngModelChange)="quantity.set($event)">
+          <quantity-input [(quantity)]="quantity" />
         </label>
   
         <p>{{cartText()}}</p>
@@ -47,21 +48,7 @@ interface Product {
 
       <aside id="recommendations-bloc">
         <h2>We recommand from same category</h2>
-
-        @for (item of recommendedProducts(); track item.id) {
-          <div class="cards">
-            <article class="card">
-              <header>
-                <h3>{{ item.title }}</h3>
-              </header>
-              <img [src]="item?.image" [alt]="item?.description">
-              <div class="content">
-                <p>{{ item?.description }}</p>
-              </div>
-    
-            </article>
-          </div>
-        }
+        <scrollable-list [elements]="recommendedProducts()" />
       </aside>
   `,
   styleUrl: './app.component.css'
