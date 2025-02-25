@@ -12,7 +12,7 @@ import { Product } from '../app.component';
               <header>
                 <h3>{{ item.title }}</h3>
               </header>
-              <img [src]="item?.image" [alt]="item?.description">
+              <img style="width: 100%;" [src]="item?.image" [alt]="item?.description">
               <div class="content">
                 <p (click)="clickEvent.emit(item?.id)">{{ item?.description }}</p>
               </div>

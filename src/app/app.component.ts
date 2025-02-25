@@ -1,7 +1,4 @@
-import { Component, computed, effect, linkedSignal, Signal, signal, WritableSignal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { fromFetch } from 'rxjs/fetch';
+import { Component, computed, linkedSignal, resource, ResourceRef, Signal, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ScrollableListComponent } from "./scrollable-list/scrollable-list.component";
 import { QuantityInputComponent } from "./quantity-input/quantity-input.component";
@@ -17,7 +14,7 @@ export interface Product {
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, FormsModule, ScrollableListComponent, QuantityInputComponent],
+  imports: [FormsModule, ScrollableListComponent, QuantityInputComponent],
   template: `
       <section id="product-bloc">
         <div>
@@ -29,7 +26,7 @@ export interface Product {
               id="select-products"
               (ngModelChange)="selectedProduct.set($event)"
             >
-              @for (item of (getProducts$ | async); track item.id) {
+              @for (item of getProducts.value(); track item.id) {
                 <option [ngValue]="item">{{item.title}}</option>
               }
             </select>
@@ -48,7 +45,7 @@ export interface Product {
 
       <aside id="recommendations-bloc">
         <h2>We recommand from same category</h2>
-        <scrollable-list [elements]="recommendedProducts()" />
+        <scrollable-list [elements]="getRecommendedProducts.value()" />
       </aside>
   `,
   styleUrl: './app.component.css'
@@ -56,8 +53,6 @@ export interface Product {
 export class AppComponent {
 
   selectedProduct: WritableSignal<Product | null> = signal(null);
-
-  recommendedProducts: WritableSignal<Product[]> = signal([]);
 
   /**
    * Chacun des signals ci dessous est réactif.
@@ -82,26 +77,13 @@ export class AppComponent {
   /**
    * HTTP call to retrieve products
    */
-  getProducts$: Observable<Product[]> = fromFetch<Product[]>('https://fakestoreapi.com/products', {
-    selector: res => res.json()
-  });
+  getProducts = resource({
+    loader: async () => (await fetch('https://fakestoreapi.com/products')).json(),
+  })
 
-  getRecommendations = (param: string): Observable<Product[]> => fromFetch<Product[]>(`https://fakestoreapi.com/products/category/${param}`, {
-    selector: res => res.json()
-  });
-
-  constructor() {
-
-    // Effect permettant de mettre à jour la liste des recommendations à chaque changement de categorie
-
-    effect(() => {
-      const category = this.category()
-
-      category && this.getRecommendations(category)
-      .pipe(tap(products => this.recommendedProducts.set(products)))
-      .subscribe()
-    })
-
-  }
+  getRecommendedProducts: ResourceRef<Product[]> = resource({
+    loader: async () => (await fetch(`https://fakestoreapi.com/products/category/${this.category()}`)).json(),
+    request: () => this.category()
+  })
   
 }
