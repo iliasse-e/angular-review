@@ -1,5 +1,5 @@
 import { Component, input, InputSignal, output } from '@angular/core';
-import { Product } from '../app.component';
+import { Product } from '../product.model';
 
 @Component({
   selector: 'scrollable-list',

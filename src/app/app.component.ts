@@ -1,16 +1,9 @@
-import { Component, computed, linkedSignal, resource, ResourceRef, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, ResourceRef, Signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ScrollableListComponent } from "./scrollable-list/scrollable-list.component";
 import { QuantityInputComponent } from "./quantity-input/quantity-input.component";
-
-export interface Product {
-  id: string,
-  price: number,
-  title: string,
-  category: string,
-  description: string,
-  image: string
-}
+import { ProductService } from './product.service';
+import { Product } from './product.model';
 
 @Component({
   selector: 'app-root',
@@ -52,7 +45,9 @@ export interface Product {
 })
 export class AppComponent {
 
-  selectedProduct: WritableSignal<Product | null> = signal(null);
+  #productService = inject(ProductService);
+
+  selectedProduct: WritableSignal<Product | null> = this.#productService.selectedProduct;
 
   /**
    * Chacun des signals ci dessous est réactif.
@@ -61,7 +56,7 @@ export class AppComponent {
 
   price: Signal<number> = computed(() => (this.selectedProduct()?.price || 0) * this.quantity());
 
-  category: Signal<string | null> = computed(() => this.selectedProduct()?.category || null);
+  category: Signal<string | null> = this.#productService.category;
   
   cartText: Signal<string> = computed(() => {
     if (!this.quantity() || !this.selectedProduct()?.title) return 'Veuillez sélectionner un produit';
@@ -74,16 +69,8 @@ export class AppComponent {
   });
 
 
-  /**
-   * HTTP call to retrieve products
-   */
-  getProducts = resource({
-    loader: async () => (await fetch('https://fakestoreapi.com/products')).json(),
-  })
+  getProducts = this.#productService.getProducts;
 
-  getRecommendedProducts: ResourceRef<Product[]> = resource({
-    loader: async () => (await fetch(`https://fakestoreapi.com/products/category/${this.category()}`)).json(),
-    request: () => this.category()
-  })
+  getRecommendedProducts: ResourceRef<Product[]> = this.#productService.getRecommendedProducts;
   
 }
