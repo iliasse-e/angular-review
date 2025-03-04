@@ -1,4 +1,4 @@
-import { Component, computed, linkedSignal, resource, ResourceRef, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, linkedSignal, resource, ResourceRef, Signal, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ScrollableListComponent } from "./scrollable-list/scrollable-list.component";
 import { QuantityInputComponent } from "./quantity-input/quantity-input.component";
@@ -44,8 +44,10 @@ export interface Product {
       </section>
 
       <aside id="recommendations-bloc">
-        <h2>We recommand from same category</h2>
-        <scrollable-list [elements]="getRecommendedProducts.value()" />
+        @if (getRecommendedProducts.hasValue()) {
+          <h2>We recommand from same category</h2>
+          <scrollable-list [elements]="getRecommendedProducts.value() || []" />
+        }
       </aside>
   `,
   styleUrl: './app.component.css'
@@ -81,9 +83,24 @@ export class AppComponent {
     loader: async () => (await fetch('https://fakestoreapi.com/products')).json(),
   })
 
-  getRecommendedProducts: ResourceRef<Product[]> = resource({
-    loader: async () => (await fetch(`https://fakestoreapi.com/products/category/${this.category()}`)).json(),
-    request: () => this.category()
+  getRecommendedProducts: ResourceRef<Product[] | undefined> = resource({
+    request: () => ({category: this.category()}),
+    loader: async ({request: {category}}): Promise<Product[] | undefined> => {
+      if (category) return (await fetch(`https://fakestoreapi.com/products/category/${category}`)).json()
+      else return;
+      },
   })
+
+  constructor() {
+    effect(() => {
+      console.log({
+        value: this.getRecommendedProducts.value(),
+        error: this.getRecommendedProducts.error(),
+        isLoading: this.getRecommendedProducts.isLoading(),
+        status: this.getRecommendedProducts.status()
+      });
+      
+    })
+  }
   
 }
