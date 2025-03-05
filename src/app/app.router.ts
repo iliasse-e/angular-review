@@ -2,7 +2,10 @@ import { Routes } from "@angular/router";
 
 export const ROUTES: Routes = [
     {
-        path: '',
+        path: '', redirectTo: '/home', pathMatch: 'full'
+    },
+    {
+        path: 'home',
         loadComponent: async () => (await import("./home/home.component")).HomeComponent
     },
     {
@@ -16,5 +19,9 @@ export const ROUTES: Routes = [
     {
         path: 'login',
         loadComponent: async () => (await import("./login/login.component")).LoginComponent
+    },
+    {
+        path: '**',
+        loadComponent: async () => (await import("./not-found/not-found.component")).NotFoundComponent
     }
 ]

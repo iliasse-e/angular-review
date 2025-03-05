@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 export interface Product {
@@ -16,7 +16,7 @@ export interface Product {
   template: `
   <nav>
     <ul>
-      <li><a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
+      <li><a routerLink="home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
       <li><a routerLink="products" routerLinkActive="active">Products</a></li>
       <li><a routerLink="my-profile" routerLinkActive="active">My profile</a></li>
     </ul>
@@ -26,7 +26,19 @@ export interface Product {
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-
-
   
+}
+
+@Injectable({providedIn: 'root'})
+export class LoginService {
+
+  isLoggedIn = signal(false);
+
+  login(): void {
+    setTimeout(() => this.isLoggedIn.set(true), 500)
+  }
+
+  logout(): void {
+    setTimeout(() => this.isLoggedIn.set(false), 500)
+  }
 }

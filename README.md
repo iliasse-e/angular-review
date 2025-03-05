@@ -12,3 +12,21 @@ Utilisation de la directive routerLink.
 Utilisation de la directive routerLinkActive et routerLinkActiveOptions.
 
 Mise en place du lazy loading.
+
+
+### 2 - Navigation
+
+Navigation (navigate & navigateByUrl).
+
+Wild card management (404 not found).
+
+Login feature.
+
+Redirection (redirectTo).
+
+Ajout de query param et de l'ancre dans l'url (queryParam & fragment).
+Possible aussi avec scrollToAnchor() via méthodes ViewportScroller.
+
+### 3 - Navigation 2
+
+Utilisation de createUrlTree()

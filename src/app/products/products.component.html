@@ -1,1 +1,23 @@
-<p>products works!</p>
+<p>products page</p>
+<table id="customers">
+    <tr>
+      <th>Nom</th>
+      <th>Type</th>
+      <th>Prix</th>
+    </tr>
+
+    @for (item of products(); track item.id) {
+        <tr (click)="checkProduct(item.id)">
+            <td>{{item.name}}</td>
+            <td>{{item.type}}</td>
+            <td>{{item.price}}</td>
+        </tr>
+    }
+</table>
+
+<section id="detail">
+    <h1>Product detail</h1>
+    <p>This text is styled with some of the text formatting properties. The heading uses the text-align, text-transform, and color properties.
+    The paragraph is indented, aligned, and the space between characters is specified. The underline is removed from this colored
+     link.</p>
+</section>
