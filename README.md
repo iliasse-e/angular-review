@@ -1,32 +1,14 @@
-# Angular Review
+# Angular Router
 
-This repository reviews all the new features / Api / tools that comes up with the last version of Angular (17 to 19).
-It also focuses on important part and tools of the framework.
 
-Each theme is represented by a branch.
+### 1 - Mise en place du routing
 
-### Signals
+Création d'un fichier route.
 
-computed()
+Importer provideRouter dans le fichier app.config.ts et lui donner les routes.
 
-effect()
+Utilisation de la directive routerLink.
 
-linkedSignal()
+Utilisation de la directive routerLinkActive et routerLinkActiveOptions.
 
-model()
-
-### Component harness test
-
-Introduction to the concept by using material's component harness
-
-### @defer
-
-### API Resource
-
-### Dependancy injection
-
-### Routing
-
-### Forms
-
-### Autre
+Mise en place du lazy loading.
