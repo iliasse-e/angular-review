@@ -1,58 +1,16 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-products',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 export class ProductsComponent {
-  #router = inject(Router)
+  #router = inject(Router);
 
   products = signal([
-    {
-      id: "001",
-      name: 'Zelige table',
-      type: 'mobilier',
-      price: 530
-    },
-    {
-      id: "001",
-      name: 'Zelige table',
-      type: 'mobilier',
-      price: 530
-    },
-    {
-      id: "001",
-      name: 'Zelige table',
-      type: 'mobilier',
-      price: 530
-    },
-    {
-      id: "001",
-      name: 'Zelige table',
-      type: 'mobilier',
-      price: 530
-    },
-    {
-      id: "001",
-      name: 'Zelige table',
-      type: 'mobilier',
-      price: 530
-    },
-    {
-      id: "001",
-      name: 'Zelige table',
-      type: 'mobilier',
-      price: 530
-    },
-    {
-      id: "001",
-      name: 'Zelige table',
-      type: 'mobilier',
-      price: 530
-    },
     {
       id: "001",
       name: 'Zelige table',
@@ -84,6 +42,8 @@ export class ProductsComponent {
       price: 100
     },
   ])
+
+  selectedProduct = signal(this.products().at(0));
 
   checkProduct(id: string) {
     this.#router.navigate([], { queryParams: {productId: id}, fragment: "detail" });

@@ -1,3 +1,31 @@
-import { Routes } from '@angular/router';
+import { Routes } from "@angular/router";
 
-export const routes: Routes = [];
+export const ROUTES: Routes = [
+    {
+        path: '', redirectTo: '/home', pathMatch: 'full'
+    },
+    {
+        path: 'home',
+        loadComponent: async () => (await import("./home/home.component")).HomeComponent
+    },
+    {
+        path: 'products/:id', // Autant de paramètres que l'on souhaite (ex: "/:id/:age")
+        loadComponent: async () => (await import('./detail/detail.component')).DetailComponent
+    },
+    {
+        path: 'products',
+        loadComponent: async () => (await import('./products/products.component')).ProductsComponent
+    },
+    {
+        path: 'my-profile',
+        loadComponent: async () => (await import("./profile/profile.component")).ProfileComponent
+    },
+    {
+        path: 'login',
+        loadComponent: async () => (await import("./login/login.component")).LoginComponent
+    },
+    {
+        path: '**',
+        loadComponent: async () => (await import("./not-found/not-found.component")).NotFoundComponent
+    }
+]

@@ -27,6 +27,14 @@ Redirection (redirectTo).
 Ajout de query param et de l'ancre dans l'url (queryParam & fragment).
 Possible aussi avec scrollToAnchor() via méthodes ViewportScroller.
 
-### 3 - Navigation 2
+
+### 3 - Parametres de route
+
+Utilisation de :id dans le chemin, de la directive routerLink.
+
+Utilisation de withComponentInputBinding() comme provider pour binder l'input d'un composant avec l'id de la route.
+
+
+### 4 - Navigation 2
 
 Utilisation de createUrlTree()
