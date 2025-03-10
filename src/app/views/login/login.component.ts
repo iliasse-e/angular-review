@@ -1,5 +1,5 @@
 import { Component, effect, inject, Signal } from '@angular/core';
-import { LoginService } from '../app.component';
+import { LoginService } from '../../app.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
     <p>login page</p>
     <button (click)="login()">Login</button>
   `,
-  styleUrl: './login.component.css'
 })
 export class LoginComponent {
   #router = inject(Router);

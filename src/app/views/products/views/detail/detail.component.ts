@@ -6,8 +6,8 @@ import { Component, input } from '@angular/core';
   template: `
     <h3>Detail product {{id()}}</h3>
   `,
-  styleUrl: './detail.component.css'
 })
 export class DetailComponent {
-  id = input.required(); // Récupère l'id sans utiliser  ActivatedRoute mais en providant withComponentInputBinding()
+  id = input.required();
+  // Récupère l'id sans utiliser  ActivatedRoute mais en providant withComponentInputBinding()
 }

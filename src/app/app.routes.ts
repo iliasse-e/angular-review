@@ -1,4 +1,7 @@
 import { Routes } from "@angular/router";
+import { PRODUCT_ROUTES } from "./views/products/products.routes";
+import { InformationComponent } from "./views/profile/views/information.component";
+import { ChildA, ChildB, ProfileComponent } from "./views/profile/profile.component";
 
 export const ROUTES: Routes = [
     {
@@ -6,26 +9,23 @@ export const ROUTES: Routes = [
     },
     {
         path: 'home',
-        loadComponent: async () => (await import("./home/home.component")).HomeComponent
-    },
-    {
-        path: 'products/:id', // Autant de paramètres que l'on souhaite (ex: "/:id/:age")
-        loadComponent: async () => (await import('./detail/detail.component')).DetailComponent
+        loadComponent: async () => (await import("./views/home/home.component")).HomeComponent
     },
     {
         path: 'products',
-        loadComponent: async () => (await import('./products/products.component')).ProductsComponent
+        children: PRODUCT_ROUTES // Possède ses propre routes (sans router outlet)
     },
     {
         path: 'my-profile',
-        loadComponent: async () => (await import("./profile/profile.component")).ProfileComponent
+        component: ProfileComponent, // possède son propre routeroutlet
+        loadChildren: async () => (await import("./views/profile/profile.routes")).ROUTES
     },
     {
         path: 'login',
-        loadComponent: async () => (await import("./login/login.component")).LoginComponent
+        loadComponent: async () => (await import("./views/login/login.component")).LoginComponent
     },
     {
         path: '**',
-        loadComponent: async () => (await import("./not-found/not-found.component")).NotFoundComponent
+        loadComponent: async () => (await import("./views/not-found/not-found.component")).NotFoundComponent
     }
 ]

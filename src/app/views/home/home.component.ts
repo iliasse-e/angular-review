@@ -1,6 +1,6 @@
 import { Component, inject, Signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../app.component';
+import { LoginService } from '../../app.component';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,6 @@ import { LoginService } from '../app.component';
     }
 
   `,
-  styleUrl: './home.component.css'
 })
 export class HomeComponent {
   #router = inject(Router);
