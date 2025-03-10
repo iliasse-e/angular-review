@@ -1,5 +1,4 @@
-import { Component, inject } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Component } from "@angular/core";
 
 @Component({
     template: `
@@ -11,8 +10,5 @@ import { ActivatedRoute } from "@angular/router";
     selector: 'information-component'
 })
 export class InformationComponent {
-    #activatedRoute = inject(ActivatedRoute)
-    constructor() {
-        console.log(this.#activatedRoute);
-    }
+
 }

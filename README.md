@@ -35,6 +35,12 @@ Utilisation de :id dans le chemin, de la directive routerLink.
 Utilisation de withComponentInputBinding() comme provider pour binder l'input d'un composant avec l'id de la route.
 
 
-### 4 - Navigation 2
+### 4 - Nested routes
 
-Utilisation de createUrlTree()
+Création de routes imbriquées via la propriété children ou loadChildren.
+
+Utilisation du router-outler dans le composant accueillant une route imbriqué (child route).
+
+Séparation des child routes dans un fichier séparé.
+
+Revue de l'architecture des dossiers (ajout de dossier views).
