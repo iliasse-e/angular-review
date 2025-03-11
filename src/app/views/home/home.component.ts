@@ -1,6 +1,6 @@
 import { Component, inject, Signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../../app.component';
+import { LoginService } from '../../login.service';
 
 @Component({
   selector: 'app-home',

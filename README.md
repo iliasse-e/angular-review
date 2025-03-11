@@ -62,3 +62,10 @@ Ajout d'une guard (asynchrone) canActiveChild afin de protéger les child routes
 Ajout d'une guard canDeactivate pour empêcher l'utilisateur de quitter un chemin.
 
 => Retourne une GuardResult (wrapped dans MaybeAsync) = bool, urlTree ou bien RedirectCommand
+
+
+### 7 - Resolver
+
+Ajout d'un résolver (dont on fourni un service pour récupérer les données)
+
+Récupération à partir de la page detail des données de l'ActivatedRoute (que fourni le resolver)

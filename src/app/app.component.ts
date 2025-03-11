@@ -1,4 +1,4 @@
-import { Component, Injectable, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 export interface Product {
@@ -27,18 +27,4 @@ export interface Product {
 })
 export class AppComponent {
 
-}
-
-@Injectable({providedIn: 'root'})
-export class LoginService {
-
-  isLoggedIn = signal(false);
-
-  login(): void {
-    setTimeout(() => this.isLoggedIn.set(true), 500)
-  }
-
-  logout(): void {
-    setTimeout(() => this.isLoggedIn.set(false), 500)
-  }
 }

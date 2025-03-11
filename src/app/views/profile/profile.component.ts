@@ -14,6 +14,9 @@ import { IsDirty } from '../../is-not-dirty.guard';
     <button><a routerLink="child-b" routerLinkActive="active">Check child B</a></button>
 
     <router-outlet />
+
+    <hr>
+    <p>Checking guards : Random redirection if not allowed to access a child route</p>
   `,
 })
 export class ProfileComponent {
