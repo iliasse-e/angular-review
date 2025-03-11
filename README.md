@@ -21,7 +21,9 @@ Introduction to the concept by using material's component harness
 
 ### @defer
 
-### API Resource
+### HTTP
+
+resource()
 
 ### Dependancy injection
 
