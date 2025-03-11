@@ -1,32 +1,15 @@
-# Angular Review
+# Ressource API
 
-This repository reviews all the new features / Api / tools that comes up with the last version of Angular (17 to 19).
-It also focuses on important part and tools of the framework.
 
-Each theme is represented by a branch.
 
-### Signals
+#### Deux propriétés à déclarer en objet de la méthode resource() :
 
-computed()
+- request : correspond au signal (ou signals via Array) auquel la méthode se mettra à jour (réactive)
+- loader : La source de donnée que l'on souhaite charger (via fetch)
 
-effect()
+#### resource() fournit un ensemble de getters :
 
-linkedSignal()
-
-model()
-
-### Component harness test
-
-Introduction to the concept by using material's component harness
-
-### @defer
-
-### API Resource
-
-### Dependancy injection
-
-### Routing
-
-### Forms
-
-### Autre
+        .value(),
+        .error(),
+        .isLoading(),
+        .status()
