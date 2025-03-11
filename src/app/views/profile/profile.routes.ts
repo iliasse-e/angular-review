@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { isNotDirtyGuard } from "../../is-not-dirty.guard";
 
 export const ROUTES: Routes = [
     {
@@ -10,6 +11,7 @@ export const ROUTES: Routes = [
     {
         path: 'child-a',
         title: 'child A',
+        canDeactivate: [isNotDirtyGuard],
         loadComponent: async () => (await import("./profile.component")).ChildA
     },
     {

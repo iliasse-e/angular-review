@@ -54,3 +54,11 @@ Récupération de la data à partir de ActivatedRoute.
 
 
 ### 6 - Guards
+
+Ajout d'une guard canActivate pour garder un chemin.
+
+Ajout d'une guard (asynchrone) canActiveChild afin de protéger les child routes.
+
+Ajout d'une guard canDeactivate pour empêcher l'utilisateur de quitter un chemin.
+
+=> Retourne une GuardResult (wrapped dans MaybeAsync) = bool, urlTree ou bien RedirectCommand
