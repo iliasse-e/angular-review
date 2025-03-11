@@ -9,7 +9,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
     <button><a routerLink="informations" routerLinkActive="active">Check my profile</a></button>
     <button><a routerLink="child-a" routerLinkActive="active">Check child A</a></button>
-    <button><a routerLink="child-b" routerLinkActive="active">Check child B</a></button>
+    <button><a routerLink="child-b" routerLinkActive="active">Check child</a></button>
 
     <router-outlet />
   `,

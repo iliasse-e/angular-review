@@ -44,3 +44,13 @@ Utilisation du router-outler dans le composant accueillant une route imbriqué (
 Séparation des child routes dans un fichier séparé.
 
 Revue de l'architecture des dossiers (ajout de dossier views).
+
+
+### 5 - Activated route
+
+Ajout de la propriété title et data dans les routes.
+
+Récupération de la data à partir de ActivatedRoute.
+
+
+### 6 - Guards

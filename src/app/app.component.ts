@@ -26,7 +26,7 @@ export interface Product {
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  
+
 }
 
 @Injectable({providedIn: 'root'})

@@ -13,6 +13,7 @@ export const ROUTES: Routes = [
     },
     {
         path: 'products',
+        title: 'products',
         children: PRODUCT_ROUTES // Possède ses propre routes (sans router outlet)
     },
     {
