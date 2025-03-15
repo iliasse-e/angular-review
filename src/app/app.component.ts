@@ -1,5 +1,6 @@
 import { JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 interface FormType {
@@ -8,12 +9,14 @@ interface FormType {
   age: FormControl<number | null>;
   email: FormControl<string | null>;
   password: FormControl<string | null>;
+  secret?: FormControl<string>;
 }
 
 @Component({
   selector: 'app-root',
   imports: [ReactiveFormsModule, JsonPipe],
   template: `
+    <div class="form-container">
       <form [formGroup]="form" (submit)="sub()">
         <div class="flex flex-col mb-10">
           <label for="firstname">Prénom</label>
@@ -40,10 +43,22 @@ interface FormType {
           <input formControlName="password" type="password" id="password" />
         </div>
 
-        <button>Submit</button>
-      </form>
+        @if (form.contains('secret')) {
+          <div class="flex flex-col mb-10">
+            <label for="secret">Secret field</label>
+            <input formControlName="secret" type="text" id="secret" />
+          </div>
+        }
 
+        <button id="submit-btn">Submit</button>
+      </form>
+      <button (click)="toggle()">{{form.controls.email.disabled ? 'Enable email' : 'Disable email'}}</button>
+    </div>
+
+    <div class="data" style="display: flex;">
       <pre>{{form.value | json}}</pre>
+      <pre>{{form.getRawValue() | json}}</pre>
+    </div>
   `,
   styleUrl: './app.component.css'
 })
@@ -54,10 +69,30 @@ export class AppComponent {
     age: new FormControl(0),
     email: new FormControl(''),
     password: new FormControl(''),
-  }, {updateOn: 'blur'}) // updateOn à quel moment on déclanche le update de l'état du reactive form
+  }, {updateOn: 'change'}) // updateOn à quel moment on déclanche le update de l'état du reactive form
+
+  events = toSignal(this.form.events);
+
+  nameChanges = toSignal(this.form.controls.firstname.valueChanges)
+
+  constructor() {
+    effect(() => {
+      if (this.nameChanges() === "secret" && !this.form.contains('secret')) {
+        this.form.addControl('secret', new FormControl('Secret juice', {nonNullable: true}));
+      } else if (this.form.contains('secret') && this.nameChanges() !== "secret") {
+        this.form.removeControl('secret');
+      }
+    })
+  }
 
   sub() {
     this.form.reset();
+  }
+
+  toggle() {
+    this.form.controls.email.disabled
+      ? this.form.controls.email.enable()
+      : this.form.controls.email.disable();
   }
   
 }

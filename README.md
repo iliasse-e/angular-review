@@ -55,6 +55,8 @@ On importe ReactiveFormsModule
 
 .touched
 
+.controls
+
 
 #### API de FormControl
 
@@ -89,3 +91,12 @@ On importe ReactiveFormsModule
 .touched
 
 .dirty
+
+
+#### Quelques méthodes / propriétés
+
+.get('formgroup.adress') permet de récupérer un control, et même un control imbriqué dans un formGroup
+
+Différence value getRawValue : Si un control est disabled, il n'apparaitra pas dans form.value (même s'il possède une valeur)
+
+.contains('formName') et addControl()

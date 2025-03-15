@@ -1,11 +1,11 @@
-:host {
-  display: flex;
-}
-
-form {
+.form-container {
   width: 100%;
   max-width: 400px;
   margin: auto;
+}
+
+.flex-col {
+  padding: 0;
 }
 
 input {
@@ -21,7 +21,7 @@ input {
 
 button {
   width: 100%;
-  background-color: #4CAF50;
+  background-color: #af4c4c;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -31,6 +31,14 @@ button {
 }
 
 button:hover {
+  background-color: #a04545;
+}
+
+#submit-btn {
+  background-color: #4CAF50;
+}
+
+#submit-btn:hover {
   background-color: #45a049;
 }
 
