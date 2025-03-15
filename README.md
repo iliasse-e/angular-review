@@ -1,32 +1,91 @@
-# Angular Review
+# Forms
 
-This repository reviews all the new features / Api / tools that comes up with the last version of Angular (17 to 19).
-It also focuses on important part and tools of the framework.
+### Introduction
 
-Each theme is represented by a branch.
+Template driven - Data driven (création du modèle dans la classe pour ensuite le binder au template).
 
-### Signals
+Chaque control est composé d'une value, d'un status et d'un validateur.
 
-computed()
+On peut imbriquer des formulaires dans un formArray
 
-effect()
 
-linkedSignal()
+### 1 - Création
 
-model()
+On importe ReactiveFormsModule
 
-### Component harness test
+1- création d'un groupe via new FormGroup()
 
-Introduction to the concept by using material's component harness
+2- Dans un objet, je donne la propriété ainsi que new FormControl()
 
-### @defer
+** Le formControl prend la valeur, et un objet de configuration (à l'intérieur le validateur, ...)
 
-### API Resource
+3- On bind le formulaire au template via la directive formGroup ainsi que les control via la directive formControlName
 
-### Dependancy injection
+** Ce binding empêche le reload de la page une fois qu'on submit le formulaire
 
-### Routing
+4- On bind l'Event (submit) à une fonction
 
-### Forms
+### 2 - Les classes héritant de AbstractControl
 
-### Autre
+#### API de FormGroup
+
+##### Méthodes
+
+.addControl()
+
+.removeControl()
+
+.get()
+
+.setValue()
+
+.patchValue()
+
+.contains()
+
+##### Propritétés
+
+.value
+
+.status
+
+.valid
+
+.pristine
+
+.touched
+
+
+#### API de FormControl
+
+##### Méthodes
+
+.setValue()
+
+.patchValue()
+
+.reset()
+
+.disable()
+
+.enable()
+
+.markAsTouched()
+
+.markAsUntouched()
+
+.updateValueAndValidity()
+
+##### Propritétés
+
+.value
+
+.status
+
+.valid
+
+.pristine
+
+.touched
+
+.dirty

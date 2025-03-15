@@ -1,120 +1,63 @@
-import { Component, computed, effect, linkedSignal, Signal, signal, WritableSignal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { fromFetch } from 'rxjs/fetch';
-import { FormsModule } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { JsonPipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-interface Product {
-  id: string,
-  price: number,
-  title: string,
-  category: string,
-  description: string,
-  image: string
+interface FormType {
+  firstname: FormControl<string>;
+  lastname: FormControl<string | null>;
+  age: FormControl<number | null>;
+  email: FormControl<string | null>;
+  password: FormControl<string | null>;
 }
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, FormsModule],
+  imports: [ReactiveFormsModule, JsonPipe],
   template: `
-      <section id="product-bloc">
-        <div>
-          <label for="select-products">
-            Select your product
-            <select 
-              [ngModel]="selectedProduct()" 
-              name="select-products" 
-              id="select-products"
-              (ngModelChange)="selectedProduct.set($event)"
-            >
-              @for (item of (getProducts$ | async); track item.id) {
-                <option [ngValue]="item">{{item.title}}</option>
-              }
-            </select>
-          </label>
+      <form [formGroup]="form" (submit)="sub()">
+        <div class="flex flex-col mb-10">
+          <label for="firstname">Prénom</label>
+          <input formControlName="firstname" type="text" id="firstname" />
         </div>
-  
-        <br>
-        <label for="quantity">
-          Quantity
-          <input name="quantity" type="number" [ngModel]="quantity()" (ngModelChange)="quantity.set($event)">
-        </label>
-  
-        <p>{{cartText()}}</p>
-        <p>Total : {{price() || '-'}} €</p>
-      </section>
 
-      <aside id="recommendations-bloc">
-        <h2>We recommand from same category</h2>
+        <div class="flex flex-col mb-10">
+          <label for="lastname">Nom</label>
+          <input formControlName="lastname" type="text" id="lastname" />
+        </div>
 
-        @for (item of recommendedProducts(); track item.id) {
-          <div class="cards">
-            <article class="card">
-              <header>
-                <h3>{{ item.title }}</h3>
-              </header>
-              <img [src]="item?.image" [alt]="item?.description">
-              <div class="content">
-                <p>{{ item?.description }}</p>
-              </div>
-    
-            </article>
-          </div>
-        }
-      </aside>
+        <div class="flex flex-col mb-10">
+          <label for="age">Age</label>
+          <input formControlName="age" type="number" id="age" />
+        </div>
+
+        <div class="flex flex-col mb-10">
+          <label for="email">E-mail</label>
+          <input formControlName="email" type="text" id="email" />
+        </div>
+
+        <div class="flex flex-col mb-10">
+          <label for="password">Mot de passe</label>
+          <input formControlName="password" type="password" id="password" />
+        </div>
+
+        <button>Submit</button>
+      </form>
+
+      <pre>{{form.value | json}}</pre>
   `,
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  form: FormGroup<FormType> = new FormGroup({
+    firstname: new FormControl('', {nonNullable: true}), // nonNullable donne une valeur en cas de reset
+    lastname: new FormControl(''),
+    age: new FormControl(0),
+    email: new FormControl(''),
+    password: new FormControl(''),
+  }, {updateOn: 'blur'}) // updateOn à quel moment on déclanche le update de l'état du reactive form
 
-  selectedProduct: WritableSignal<Product | null> = signal(null);
-
-  recommendedProducts: WritableSignal<Product[]> = signal([]);
-
-  /**
-   * Chacun des signals ci dessous est réactif.
-   * Ils se mettent à jour selon l'état / changement d'un signal de référence
-   */
-
-  price: Signal<number> = computed(() => (this.selectedProduct()?.price || 0) * this.quantity());
-
-  category: Signal<string | null> = computed(() => this.selectedProduct()?.category || null);
-  
-  cartText: Signal<string> = computed(() => {
-    if (!this.quantity() || !this.selectedProduct()?.title) return 'Veuillez sélectionner un produit';
-    return `Votre panier contient ${this.quantity()} ${this.selectedProduct()?.title}`;
-  })
-  
-  quantity: WritableSignal<number> = linkedSignal({
-    source: this.selectedProduct,
-    computation: () => 1
-  });
-
-
-  /**
-   * HTTP call to retrieve products
-   */
-  getProducts$: Observable<Product[]> = fromFetch<Product[]>('https://fakestoreapi.com/products', {
-    selector: res => res.json()
-  });
-
-  getRecommendations = (param: string): Observable<Product[]> => fromFetch<Product[]>(`https://fakestoreapi.com/products/category/${param}`, {
-    selector: res => res.json()
-  });
-
-  constructor() {
-
-    // Effect permettant de mettre à jour la liste des recommendations à chaque changement de categorie
-
-    effect(() => {
-      const category = this.category()
-
-      category && this.getRecommendations(category)
-      .pipe(tap(products => this.recommendedProducts.set(products)))
-      .subscribe()
-    })
-
+  sub() {
+    this.form.reset();
   }
   
 }
