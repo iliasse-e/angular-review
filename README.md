@@ -32,6 +32,8 @@ On importe ReactiveFormsModule
 
 ##### Méthodes
 
+```
+
 .addControl()
 
 .removeControl()
@@ -44,7 +46,11 @@ On importe ReactiveFormsModule
 
 .contains()
 
+```
+
 ##### Propritétés
+
+```
 
 .value
 
@@ -58,11 +64,14 @@ On importe ReactiveFormsModule
 
 .controls
 
+```
+
 
 #### API de FormControl
 
 ##### Méthodes
 
+```
 .setValue()
 
 .patchValue()
@@ -79,8 +88,11 @@ On importe ReactiveFormsModule
 
 .updateValueAndValidity()
 
+```
+
 ##### Propritétés
 
+```
 .value
 
 .status
@@ -92,7 +104,7 @@ On importe ReactiveFormsModule
 .touched
 
 .dirty
-
+```
 
 #### Quelques méthodes / propriétés
 
@@ -137,5 +149,27 @@ Ce validateur permet de récupérer les différents controls dans la fonction.
 
 [Doc](https://angular.fr/reactive-forms/create-validator-async.html)
 
+
 ### 7 - UX et gestion d'erreur
 
+#### Utiliser les propriétés pour détecter l'état des controls :
+
+```
+valid // Renvoie true si le contrôle est valide.
+invalid // Renvoie true si le contrôle est invalide.
+pristine // Renvoie true si le contrôle est intact (non modifié).
+dirty // Renvoie true si le contrôle a été modifié.
+touched // Renvoie true si le contrôle a perdu le focus.
+untouched // Renvoie true si le contrôle n'a pas encore perdu le focus.
+```
+
+#### Utiliser les classes CSS générées
+
+```
+ng-valid
+ng-invalid
+ng-pristine
+ng-dirty
+ng-untouched
+ng-touched
+```
