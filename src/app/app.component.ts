@@ -24,13 +24,13 @@ interface FormType {
           <label for="firstname">Prénom</label>
           <span class="tooltiptext">Tapez "secret"</span>
           <input formControlName="firstname" type="text" id="firstname" />
-          @let firstnameErrors = form.get('firstname')?.errors;
-          @if (firstnameErrors?.['required']) {
+          @let firstname = form.get('firstname');
+          @if (firstname?.errors?.['required'] && firstname?.touched) {
             <span class="error">Le champs est obligatoire</span>
-          } @else if (firstnameErrors?.['minlength']) {
+          } @else if (firstname?.errors?.['minlength'] && firstname?.touched) {
             <span class="error">Vous avez renseigné 
-              {{firstnameErrors?.['minlength']?.['actualLength']}} charactères sur
-              {{firstnameErrors?.['minlength']?.['requiredLength']}} </span>
+              {{firstname?.errors?.['minlength']?.['actualLength']}} charactères sur
+              {{firstname?.errors?.['minlength']?.['requiredLength']}} </span>
           }
         </div>
 

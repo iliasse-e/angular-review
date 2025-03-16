@@ -132,7 +132,10 @@ control.errors
 ```
 
 Exploration de l'objet errors d'un control.
-Exemple d'erreur : { minlength: { requiredLength: 4, actualLength: 2 } }
+Exemple d'erreur : 
+``` 
+{ minlength: { requiredLength: 4, actualLength: 2 } } 
+```
 
 A noter : Les erreurs dans l'objet errors sont organisé par ordre et peut en afficher qu'un à la fois (ex: l'objet renvoie required exclusivement).
 

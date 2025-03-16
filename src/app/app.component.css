@@ -76,3 +76,11 @@ div {
   color: #a04545;
   font-size: smaller;
 }
+
+input.ng-valid.ng-dirty {
+  border: #4CAF50 2px solid;
+}
+
+input.ng-invalid.ng-touched {
+  border: #af4c4c 2px solid;
+}
