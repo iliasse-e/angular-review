@@ -103,11 +103,17 @@ Différence value getRawValue : Si un control est disabled, il n'apparaitra pas 
 .contains('formName') et addControl()
 
 
-### 3 - Validateurs synchrone
+### 3 - Validateur synchrone
 
 Ajout validateur.
 
 Gestion de l'affichage des erreurs dans le template.
+
+```
+control.hasError() 
+control.errors
+
+```
 
 Exploration de l'objet errors d'un control.
 Exemple d'erreur : { minlength: { requiredLength: 4, actualLength: 2 } }
@@ -115,5 +121,21 @@ Exemple d'erreur : { minlength: { requiredLength: 4, actualLength: 2 } }
 A noter : Les erreurs dans l'objet errors sont organisé par ordre et peut en afficher qu'un à la fois (ex: l'objet renvoie required exclusivement).
 
 
-### 4 - Validateurs asynchrone
+### 4 - Validateur personnalisé
+
+On créé une fonction en implémentant l'interface ValidatorFn.
+
+
+### 5 - Validateur de formGroup
+
+On créé un validateur qui compare plusieurs controls, et que l'on déclare au niveau du form et non des controls.
+
+Ce validateur permet de récupérer les différents controls dans la fonction.
+
+
+### 6 - Validateur asynchrone
+
+[Doc](https://angular.fr/reactive-forms/create-validator-async.html)
+
+### 7 - UX et gestion d'erreur
 

@@ -71,3 +71,8 @@ div {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+.error {
+  color: #a04545;
+  font-size: smaller;
+}

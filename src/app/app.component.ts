@@ -2,6 +2,7 @@ import { JsonPipe } from '@angular/common';
 import { Component, effect } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { emailExistsValidatorAsync, forbidEmailValidator, nameValidator, passwordMatchValidator } from './validator';
 
 interface FormType {
   firstname: FormControl<string>;
@@ -9,6 +10,7 @@ interface FormType {
   age: FormControl<number | null>;
   email: FormControl<string | null>;
   password: FormControl<string | null>;
+  confirmPassword: FormControl<string | null>;
   secret?: FormControl<string>;
 }
 
@@ -35,6 +37,9 @@ interface FormType {
         <div class="flex flex-col mb-10">
           <label for="lastname">Nom</label>
           <input formControlName="lastname" type="text" id="lastname" />
+          @if (form.get('lastname')?.hasError('forbiddenName')) {
+            <span class="error">Ce nom n'est pas autorisé</span>
+          }
         </div>
 
         <div class="flex flex-col mb-10">
@@ -45,11 +50,21 @@ interface FormType {
         <div class="flex flex-col mb-10">
           <label for="email">E-mail</label>
           <input formControlName="email" type="text" id="email" />
+          @if (form.get('email')?.hasError('forbiddenMail')) {
+            <span class="error">Les emails russes sont interdits</span>
+          } @else if (form.get('email')?.hasError('emailExists')) {
+            <span class="error">Cet email est déjà existant</span>
+          }
         </div>
 
         <div class="flex flex-col mb-10">
           <label for="password">Mot de passe</label>
           <input formControlName="password" type="password" id="password" />
+        </div>
+
+        <div class="flex flex-col mb-10">
+          <label for="confirmPassword">Confirmez mot de passe</label>
+          <input formControlName="confirmPassword" type="password" id="confirmPassword" />
         </div>
 
         @if (form.contains('secret')) {
@@ -60,6 +75,9 @@ interface FormType {
         }
 
         <button id="submit-btn">Submit</button>
+        @if (form.hasError('passwordMismatch') && (form.get('password')?.dirty && form.get('confirmPassword')?.dirty)) {
+            <span class="error">Les mots de passe sont incohérents</span>
+          }
       </form>
       <button (click)="toggle()">{{form.controls.email.disabled ? 'Enable email' : 'Disable email'}}</button>
     </div>
@@ -77,17 +95,23 @@ export class AppComponent {
       nonNullable: true, // nonNullable : donne une valeur en cas de reset
       validators: [Validators.required, Validators.minLength(4)]
     }),
-    lastname: new FormControl(''),
+    lastname: new FormControl('', nameValidator()),
     age: new FormControl(0),
-    email: new FormControl(''),
+    email: new FormControl('', {
+      validators: forbidEmailValidator('.ru'),
+      asyncValidators: emailExistsValidatorAsync
+    }),
     password: new FormControl(''),
-  }, {updateOn: 'change'}) // updateOn : à quel moment on déclanche le update de l'état du reactive form
-
-  events = toSignal(this.form.events);
+    confirmPassword: new FormControl(''),
+  }, {
+    updateOn: 'change', // updateOn : à quel moment on déclanche le update de l'état du reactive form
+    validators: [passwordMatchValidator] // validator pour le formGroup (qui compare deux controls)
+  }) 
+  
   nameChanges = toSignal(this.form.controls.firstname.valueChanges);
 
   constructor() {
-    effect(() => {
+    effect(() => { // Met à jour le formulaire en fonction de l'input dans le champ prénom
       if (this.nameChanges() === "secret" && !this.form.contains('secret')) {
         this.form.addControl('secret', new FormControl('Secret juice', {nonNullable: true}));
       } else if (this.form.contains('secret') && this.nameChanges() !== "secret") {
