@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Component, effect } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 interface FormType {
   firstname: FormControl<string>;
@@ -18,9 +18,18 @@ interface FormType {
   template: `
     <div class="form-container">
       <form [formGroup]="form" (submit)="sub()">
-        <div class="flex flex-col mb-10">
+        <div class="flex flex-col mb-10 tooltip">
           <label for="firstname">Prénom</label>
+          <span class="tooltiptext">Tapez "secret"</span>
           <input formControlName="firstname" type="text" id="firstname" />
+          @let firstnameErrors = form.get('firstname')?.errors;
+          @if (firstnameErrors?.['required']) {
+            <span class="error">Le champs est obligatoire</span>
+          } @else if (firstnameErrors?.['minlength']) {
+            <span class="error">Vous avez renseigné 
+              {{firstnameErrors?.['minlength']?.['actualLength']}} charactères sur
+              {{firstnameErrors?.['minlength']?.['requiredLength']}} </span>
+          }
         </div>
 
         <div class="flex flex-col mb-10">
@@ -64,16 +73,18 @@ interface FormType {
 })
 export class AppComponent {
   form: FormGroup<FormType> = new FormGroup({
-    firstname: new FormControl('', {nonNullable: true}), // nonNullable donne une valeur en cas de reset
+    firstname: new FormControl('', {
+      nonNullable: true, // nonNullable : donne une valeur en cas de reset
+      validators: [Validators.required, Validators.minLength(4)]
+    }),
     lastname: new FormControl(''),
     age: new FormControl(0),
     email: new FormControl(''),
     password: new FormControl(''),
-  }, {updateOn: 'change'}) // updateOn à quel moment on déclanche le update de l'état du reactive form
+  }, {updateOn: 'change'}) // updateOn : à quel moment on déclanche le update de l'état du reactive form
 
   events = toSignal(this.form.events);
-
-  nameChanges = toSignal(this.form.controls.firstname.valueChanges)
+  nameChanges = toSignal(this.form.controls.firstname.valueChanges);
 
   constructor() {
     effect(() => {

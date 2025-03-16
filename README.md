@@ -25,6 +25,7 @@ On importe ReactiveFormsModule
 
 4- On bind l'Event (submit) à une fonction
 
+
 ### 2 - Les classes héritant de AbstractControl
 
 #### API de FormGroup
@@ -100,3 +101,19 @@ On importe ReactiveFormsModule
 Différence value getRawValue : Si un control est disabled, il n'apparaitra pas dans form.value (même s'il possède une valeur)
 
 .contains('formName') et addControl()
+
+
+### 3 - Validateurs synchrone
+
+Ajout validateur.
+
+Gestion de l'affichage des erreurs dans le template.
+
+Exploration de l'objet errors d'un control.
+Exemple d'erreur : { minlength: { requiredLength: 4, actualLength: 2 } }
+
+A noter : Les erreurs dans l'objet errors sont organisé par ordre et peut en afficher qu'un à la fois (ex: l'objet renvoie required exclusivement).
+
+
+### 4 - Validateurs asynchrone
+
