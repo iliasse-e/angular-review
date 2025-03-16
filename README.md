@@ -108,12 +108,16 @@ On importe ReactiveFormsModule
 
 #### Quelques méthodes / propriétés
 
-.get('formgroup.adress') permet de récupérer un control, et même un control imbriqué dans un formGroup
+``` 
+.get('formgroup.adress') // permet de récupérer un control, et même un control imbriqué dans un formGroup
+``` 
 
 Différence value getRawValue : Si un control est disabled, il n'apparaitra pas dans form.value (même s'il possède une valeur)
 
-.contains('formName') et addControl()
-
+```
+.contains('formName') 
+.addControl()
+```
 
 ### 3 - Validateur synchrone
 
@@ -147,7 +151,7 @@ Ce validateur permet de récupérer les différents controls dans la fonction.
 
 ### 6 - Validateur asynchrone
 
-[Doc](https://angular.fr/reactive-forms/create-validator-async.html)
+[Documentation concrète](https://angular.fr/reactive-forms/create-validator-async.html)
 
 
 ### 7 - UX et gestion d'erreur
