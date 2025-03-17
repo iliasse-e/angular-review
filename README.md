@@ -123,6 +123,18 @@ Différence value getRawValue : Si un control est disabled, il n'apparaitra pas 
 
 Ajout validateur.
 
+Exemple de validateurs :
+```
+min()
+max()
+required()
+requiredTrue() // pour checkbox
+compose()
+pattern()
+maxLength()
+...
+```
+
 Gestion de l'affichage des erreurs dans le template.
 
 ```
@@ -180,3 +192,22 @@ ng-dirty
 ng-untouched
 ng-touched
 ```
+
+### 8 - Formulaires imbriqués
+
+Imbrication en incluant un formGroup dans le formGroup.
+
+Dans le template on utilise la directive 
+```
+formGroupName
+```
+
+Getter dans le template :
+
+```
+form.get('imbricatedForm.control')
+```
+
+### 9 - Ng-select
+
+### 10 - ControlValueAccessor 

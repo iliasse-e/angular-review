@@ -12,6 +12,11 @@ interface FormType {
   password: FormControl<string | null>;
   confirmPassword: FormControl<string | null>;
   secret?: FormControl<string>;
+  adress: FormGroup<{
+    zip: FormControl<number>;
+    city: FormControl<string | null>;
+    street: FormControl<string | null>;
+  }>
 }
 
 @Component({
@@ -57,6 +62,29 @@ interface FormType {
           }
         </div>
 
+        <ng-container formGroupName="adress">
+          
+          <div class="flex flex-col mb-10">
+            <label for="zip">Code postal</label>
+            <input formControlName="zip" type="number" id="zip" />
+            @let zip = form.get('adress.zip')!;
+            @if ((zip.hasError('min') || zip.hasError('max')) && zip.dirty) {
+            <span class="error">Le code doit être entre 1000 et 9999</span>
+          }
+          </div>
+  
+          <div class="flex flex-col mb-10">
+            <label for="street">Adresse</label>
+            <input formControlName="street" type="text" id="street" />
+          </div>
+  
+          <div class="flex flex-col mb-10">
+            <label for="city">Commune</label>
+            <input formControlName="city" type="number" id="city" />
+          </div>
+
+        </ng-container>
+
         <div class="flex flex-col mb-10">
           <label for="password">Mot de passe</label>
           <input formControlName="password" type="password" id="password" />
@@ -100,6 +128,11 @@ export class AppComponent {
     email: new FormControl('', {
       validators: forbidEmailValidator('.ru'),
       asyncValidators: emailExistsValidatorAsync
+    }),
+    adress: new FormGroup({
+      zip: new FormControl(0, {nonNullable: true, validators: [Validators.min(1000), Validators.max(9999)]}),
+      city: new FormControl(''), // accessible via form.get('adress.city')
+      street: new FormControl(''),
     }),
     password: new FormControl(''),
     confirmPassword: new FormControl(''),
