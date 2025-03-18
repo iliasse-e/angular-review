@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Component, effect } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { emailExistsValidatorAsync, forbidEmailValidator, nameValidator, passwordMatchValidator } from './validator';
 
 interface FormType {
@@ -17,6 +17,10 @@ interface FormType {
     city: FormControl<string | null>;
     street: FormControl<string | null>;
   }>
+  languages: FormArray<FormGroup<{
+    name: FormControl<string | null>;
+    level: FormControl<number>;
+  }>>
 }
 
 @Component({
@@ -85,6 +89,34 @@ interface FormType {
 
         </ng-container>
 
+        @if (languages.length) {
+          <div formArrayName="languages">
+            @for (guest of languages.controls; track $index) {
+            <div [formGroupName]="$index">
+              <h3>Langue #{{ $index + 1 }}</h3>
+  
+              <div>
+                <label>Nom :</label>
+                <input formControlName="name" />
+              </div>
+  
+              <div>
+                <label>Niveau :</label>
+                <input formControlName="level" type="number" />
+              </div>
+  
+              <button type="button" (click)="deleteLanguage($index)">
+                Supprimer
+              </button>
+            </div>
+            }
+          </div>
+
+        }
+
+        <button type="button" (click)="addLanguage()">Ajouter une langue</button>
+
+
         <div class="flex flex-col mb-10">
           <label for="password">Mot de passe</label>
           <input formControlName="password" type="password" id="password" />
@@ -127,7 +159,7 @@ export class AppComponent {
     age: new FormControl(0),
     email: new FormControl('', {
       validators: forbidEmailValidator('.ru'),
-      asyncValidators: emailExistsValidatorAsync
+      asyncValidators: emailExistsValidatorAsync,
     }),
     adress: new FormGroup({
       zip: new FormControl(0, {nonNullable: true, validators: [Validators.min(1000), Validators.max(9999)]}),
@@ -136,6 +168,7 @@ export class AppComponent {
     }),
     password: new FormControl(''),
     confirmPassword: new FormControl(''),
+    languages: new FormArray<any>([]),
   }, {
     updateOn: 'change', // updateOn : à quel moment on déclanche le update de l'état du reactive form
     validators: [passwordMatchValidator] // validator pour le formGroup (qui compare deux controls)
@@ -161,6 +194,21 @@ export class AppComponent {
     this.form.controls.email.disabled
       ? this.form.controls.email.enable()
       : this.form.controls.email.disable();
+  }
+
+  get languages(): FormArray {
+    return this.form.get('languages') as FormArray;
+  }
+
+  addLanguage() {
+    this.languages.push(new FormGroup({
+      name: new FormControl('', Validators.required),
+      level: new FormControl(0)
+    }));
+  }
+
+  deleteLanguage(index: number) {
+    this.languages.removeAt(index);
   }
   
 }

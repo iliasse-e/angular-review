@@ -33,6 +33,7 @@ export const passwordMatchValidator: ValidatorFn = (group: AbstractControl<FormG
 // Validateurs asynchrones
 
 export async function emailExistsValidatorAsync(control: AbstractControl):  Promise<ValidationErrors | null> {
+  if (!control.value) return null; // Check si la valeur est une empty string
   const exists = await randomAPI(control.value);
   return exists ? { emailExists: true } : null;
 }

@@ -208,6 +208,19 @@ Getter dans le template :
 form.get('imbricatedForm.control')
 ```
 
-### 9 - Ng-select
+### 9 - FormArray
+
+#### Hiérarchie des directives 
+```
+<form [formGroup]="eventForm">              <!-- Niveau 1: FormGroup principal -->
+  <div formArrayName="guests">              <!-- Niveau 2: FormArray -->
+    <div [formGroupName]="$index">          <!-- Niveau 3: FormGroup individuel -->
+      <input formControlName="name">        <!-- Niveau 4: FormControl -->
+    </div>
+  </div>
+</form>
+```
+
+### 10 - Ng-select
 
 ### 10 - ControlValueAccessor 
