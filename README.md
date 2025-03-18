@@ -223,4 +223,7 @@ form.get('imbricatedForm.control')
 
 ### 10 - Ng-select
 
+Utilisation d'un select et de ng-value.
+
+
 ### 10 - ControlValueAccessor 

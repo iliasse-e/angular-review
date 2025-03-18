@@ -102,7 +102,11 @@ interface FormType {
   
               <div>
                 <label>Niveau :</label>
-                <input formControlName="level" type="number" />
+                <select formControlName="level" id="level">
+                  @for (item of level; track item.level) {
+                    <option [ngValue]="item.level">{{item.label}}</option>
+                  }
+                </select>
               </div>
   
               <button type="button" (click)="deleteLanguage($index)">
@@ -111,7 +115,6 @@ interface FormType {
             </div>
             }
           </div>
-
         }
 
         <button type="button" (click)="addLanguage()">Ajouter une langue</button>
@@ -172,7 +175,9 @@ export class AppComponent {
   }, {
     updateOn: 'change', // updateOn : à quel moment on déclanche le update de l'état du reactive form
     validators: [passwordMatchValidator] // validator pour le formGroup (qui compare deux controls)
-  }) 
+  })
+
+  level = languageLevel;
   
   nameChanges = toSignal(this.form.controls.firstname.valueChanges);
 
@@ -212,3 +217,22 @@ export class AppComponent {
   }
   
 }
+
+const languageLevel = [
+  {
+    level: 0,
+    label: 'notions'
+  },
+  {
+    level: 1,
+    label: 'courant'
+  },
+  {
+    level: 2,
+    label: 'bilingue'
+  },
+  {
+    level: 3,
+    label: 'natif'
+  }
+]
