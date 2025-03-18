@@ -23,7 +23,7 @@ Introduction to the concept by using material's component harness
 
 ### @defer
 
-### Resource
+### Resource()
 
 ### Dependancy injection
 
@@ -34,5 +34,7 @@ Introduction to the concept by using material's component harness
 ### Cypress
 
 ### Directive
+
+### Pipe
 
 ### Autre
