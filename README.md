@@ -1,32 +1,32 @@
-# Angular Review
+# Directive
 
-This repository reviews all the new features / Api / tools that comes up with the last version of Angular (17 to 19).
-It also focuses on important part and tools of the framework.
+### Introduction
 
-Each theme is represented by a branch.
+Les directives sont des classes qui vous permettent d'ajouter un comportement personnalisé aux éléments du DOM.
 
-### Signals
+Deux types de directives :
 
-computed()
+- Directives d'attributs : elles modifient l'apparence ou le comportement d'un élément, d'un composant ou d'une autre directive. Par exemple, une directive qui change la couleur de fond d'un élément lorsqu'il est survolé.
 
-effect()
+- Directives structurelles : elles modifient la structure du DOM en ajoutant ou en supprimant des éléments. 
 
-linkedSignal()
 
-model()
+### 1 - Création
 
-### Component harness test
+Decorateur, et selector (entre crochets)
+```
+@Directive({
+  selector: '[appSurbrillance]',
+})
 
-Introduction to the concept by using material's component harness
+```
 
-### @defer
+### 2 - L'élément Host
 
-### API Resource
+Il s'agit de l'élément qui va accueillir la directive.
 
-### Dependancy injection
+Deux manière de récupérer le host :
 
-### Routing
+- Via host {}
 
-### Forms
-
-### Autre
+- Via l'injection de ElementRef
