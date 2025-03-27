@@ -30,3 +30,26 @@ Deux manière de récupérer le host :
 - Via host {}
 
 - Via l'injection de ElementRef
+
+### 3 - Récupérer un Event
+
+- Relativement un event relatif au scope de l'élément host
+```
+  host: {
+    '(keyup)': 'updateColor($event)'
+  }
+```
+
+
+- Relativement un event relatif au scope de window
+```
+  host: {
+    '(window:keyup)': 'updateColor($event)'
+  }
+```
+
+- Alternative : Le décorateur HostListener
+
+```
+@HostListener('click', ['$event'])
+```

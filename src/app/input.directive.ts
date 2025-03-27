@@ -1,4 +1,4 @@
-import { Directive, ElementRef, inject, signal } from '@angular/core';
+import { Directive, ElementRef, inject, Input, signal } from '@angular/core';
 
 @Directive({
   selector: '[appInput]',
@@ -7,12 +7,15 @@ import { Directive, ElementRef, inject, signal } from '@angular/core';
     // [style.color]: 'getColor()',
     // '[style.color]': '"blue"',
     '[style.color]': 'color()',
+    // '(window:keyup)': 'updateColor($event)'
   },
 })
 export class InputDirective {
 
   myhost = inject(ElementRef<HTMLInputElement>);
-  color = signal<string>('purple');
+  
+  @Input('appInput')
+  color = signal<string>('');
 
   constructor() {
     // 1re façon :
@@ -21,6 +24,10 @@ export class InputDirective {
 
   getColor() {
     return 'orange';
+  }
+
+  updateColor(event: KeyboardEvent) {
+    this.color.set((event.target as any).value)
   }
 
 }
