@@ -1,32 +1,39 @@
-# Angular Review
+# Signals
 
-This repository reviews all the new features / Api / tools that comes up with the last version of Angular (17 to 19).
-It also focuses on important part and tools of the framework.
+A signal is a wrapper around a value that notifies interested consumers when that value changes. Signals can contain any value, from primitives to complex data structures.
 
-Each theme is represented by a branch.
+You read a signal's value by calling its getter function, which allows Angular to track where the signal is used.
 
-### Signals
+Signals may be either writable or read-only.
 
-computed()
 
-effect()
+### Writable signals
 
-linkedSignal()
 
-model()
+```
+const value: WritableSignal<number> = signal(0)
 
-### Component harness test
+value() // in order to read the value
+```
 
-Introduction to the concept by using material's component harness
+Methods :
 
-### @defer
+```
+value.set(1)
 
-### API Resource
+value.update(value => value * 2) // compute a new value from the previous one
+```
 
-### Dependancy injection
+### Computed signals
 
-### Routing
+are read-only signals that derive their value from other signals. You define computed signals using the computed function and specifying a derivation
 
-### Forms
 
-### Autre
+```
+const count: WritableSignal<number> = signal(0);
+const doubleCount: Signal<number> = computed(() => count() * 2);
+```
+
+The doubleCount signal depends on the count signal. Whenever count updates, Angular knows that doubleCount needs to update as well.
+
+Computed signals are both lazily evaluated and memoized. It's not calculated until it is read the first time, also its value is cached.
