@@ -7,6 +7,7 @@ Each theme is represented by a branch.
 
 ### Signals
 
+```
 signal()
 
 computed()
@@ -16,6 +17,8 @@ effect()
 linkedSignal()
 
 model()
+
+```
 
 ### Component harness test
 
