@@ -16,7 +16,7 @@ effect()
 
 linkedSignal()
 
-model()
+resource()
 
 ```
 
@@ -28,7 +28,11 @@ Introduction to the concept by using material's component harness
 
 ### @defer
 
-### Resource
+### Double data binding
+
+```
+model()
+```
 
 ### Dependancy injection
 
