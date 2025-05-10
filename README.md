@@ -17,7 +17,6 @@ effect()
 linkedSignal()
 
 resource()
-
 ```
 
 ### Component harness test
