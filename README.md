@@ -47,4 +47,6 @@ model()
 
 ### ZoneJS
 
+### Lifecycle hooks
+
 ### Other
