@@ -1,32 +1,89 @@
-# Angular Review
+# RxJS
 
-This repository reviews all the new features / Api / tools that comes up with the last version of Angular (17 to 19).
-It also focuses on important part and tools of the framework.
+#
+### Observable froid et chaud
 
-Each theme is represented by a branch.
+La différence entre un observable froid et chaud en RxJS est que les observables froids produisent des valeurs indépendamment de l'existence de souscriptions, tandis que les observables chauds ne produisent des valeurs que lorsqu'il y a des souscriptions actives.
 
-### Signals
+```javascript
+// observable froid
+const coldObservable = new Observable(observer => {
+  observer.next(1);
+  observer.next(2);
+  observer.next(3);
+  observer.complete();
+});
 
-computed()
+// observable chaud
+const hotObservable = new Subject();
+hotObservable.next(1);
+hotObservable.next(2);
+hotObservable.next(3);
+hotObservable.complete();
+```
 
-effect()
+Si on souscrit à l'observable chaud après qu'elle soit `complete()`, on ne recevra aucune valeur.
 
-linkedSignal()
+#
+### Gestion de la souscription
 
-model()
+#### 1 - `Unsubscribe` dans `ngOnDestroy`
+On profite généralement du "Lifecycle Hook" `ngOnDestroy` pour déclencher l'unsubscribe.
 
-### Component harness test
+```typescript
+private _bookListSubscription: Subscription;
 
-Introduction to the concept by using material's component harness
+constructor(private _bookRepository: BookRepository) {
+}
 
-### @defer
+ngOnInit() {
+    this._bookListSubscription = this._bookRepository.getBookList()
+        .subscribe(bookList => this.bookList = bookList);
+}
 
-### API Resource
+ngOnDestroy() {
+    this._bookListSubscription.unsubscribe();
+}
+```
 
-### Dependancy injection
 
-### Routing
+#### 2 - Unsubscribe avec `takeUntil`
 
-### Forms
+```typescript
+export class BookSearchComponent implements OnDestroy, OnInit {
 
-### Autre
+    bookList: Book[];
+
+    private _isDead$ = new Subject();
+
+    constructor(private _bookRepository: BookRepository) {
+    }
+
+    ngOnInit() {
+        this._bookRepository.getBookList()
+            .pipe(takeUntil(this._isDead$))
+            .subscribe(bookList => this.bookList = bookList);
+    }
+
+    ngOnDestroy() {
+        this._isDead$.next();
+    }
+
+}
+```
+
+#### 3 - Unsubscribe avec le Pipe `async`
+
+#
+### Créer une Observable
+
+```javascript
+const observable = new Observable((observer) => {
+  let count = 0;
+  setInterval(() => {
+    observer.next(count);
+    count++;
+  }, 1000);
+});
+// On doit y souscrire ensuite pour consommer les données
+```
