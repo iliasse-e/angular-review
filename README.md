@@ -1,7 +1,6 @@
 # Angular Review
 
-Reviews all the new features / Api / tools that comes up with the last version of Angular (17 to 19).
-It also focuses on important part and tools of the framework.
+Reviews all important features / Api / tools of the framework.
 
 Each theme is represented by a branch.
 
