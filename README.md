@@ -24,6 +24,20 @@ Inheritance
 ...
 ```
 
+### Templates
+```
+Control flow
+
+Variables
+
+Event listeners
+
+@defer
+
+ng-template
+
+ng-content
+```
 ### Signals
 
 ```
@@ -43,8 +57,6 @@ resource()
 Introduction to the concept by using material's component harness
 
 ### Testing
-
-### @defer
 
 ### Double data binding
 
