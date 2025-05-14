@@ -4,6 +4,8 @@ Reviews all important features / Api / tools of the framework.
 
 Each theme is represented by a branch.
 
+### Lifecycle hooks
+
 ### Signals
 
 ```
@@ -45,7 +47,5 @@ model()
 ### Pipe
 
 ### ZoneJS
-
-### Lifecycle hooks
 
 ### Other
