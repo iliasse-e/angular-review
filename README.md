@@ -6,6 +6,8 @@ Each theme is represented by a branch.
 
 ### Lifecycle hooks
 
+### Component
+
 ### Signals
 
 ```
