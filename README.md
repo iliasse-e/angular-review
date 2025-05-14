@@ -4,9 +4,25 @@ Reviews all important features / Api / tools of the framework.
 
 Each theme is represented by a branch.
 
-### Lifecycle hooks
-
 ### Component
+
+```
+Lifecycle
+
+Host elements
+
+Styling
+
+Dom APIs
+
+Input & Output
+
+ViewChild()
+
+Inheritance
+
+...
+```
 
 ### Signals
 
