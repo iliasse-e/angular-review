@@ -80,4 +80,6 @@ model()
 
 ### ZoneJS
 
+### i18n
+
 ### Other
