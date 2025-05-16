@@ -1,8 +1,8 @@
 # Angular Review
 
-Reviews all important features / Api / tools of the framework.
+Reviews all important features / Api / tools of the framework
 
-Each theme is represented by a branch.
+Each theme is represented by a branch
 
 ### Component
 
