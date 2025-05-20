@@ -24,7 +24,7 @@ Inheritance
 ...
 ```
 
-### Templates [Templates](https://github.com/iliasse-e/angular_review/tree/templates)
+### [Templates](https://github.com/iliasse-e/angular_review/tree/templates)
 ```
 Control flow
 
