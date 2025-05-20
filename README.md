@@ -4,7 +4,7 @@ Reviews all important features / Api / tools of the framework
 
 Each theme is represented by a branch
 
-### Component
+###  [Component](https://github.com/iliasse-e/angular_review/tree/component)
 
 ```
 Lifecycle
