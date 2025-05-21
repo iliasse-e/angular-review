@@ -5,9 +5,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
   template: `
     <button class="my-btn">My Button</button>
   `,
-  styles: [`.my-btn {color: red}`],
-  encapsulation: ViewEncapsulation.ShadowDom // By default
+  styles: [`::ng-deep.my-btn {color: red}`],
+  encapsulation: ViewEncapsulation.Emulated // By default
 })
 export class MyButtonComponent {
-
+  // Testing styling
 }
