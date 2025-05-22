@@ -40,7 +40,7 @@ ng-template
 
 ng-content
 ```
-### [Signals](https://github.com/iliasse-e/angular_review/tree/signals)
+### [Signals](https://github.com/iliasse-e/angular_review/tree/signal)
 
 ```
 signal()
