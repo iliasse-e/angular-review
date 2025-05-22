@@ -1,85 +1,39 @@
-# Angular Review
+# Component
 
-Reviews all important features / Api / tools of the framework.
+### Component selector
 
-Each theme is represented by a branch.
+```typescript
+@Component({
+  selector: 'profile-photo',
+  ...
+})
+export class ProfilePhoto { }
+```
 
-### Component
+| **Selector type**  | **Description**                                                                                                 | **Examples**                  |
+| ------------------ | --------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| Type selector      | Matches elements based on their HTML tag name, or node name.                                                    | `profile-photo`               |
+| Attribute selector | Matches elements based on the presence of an HTML attribute and, optionally, an exact value for that attribute. | `[dropzone]` `[type="reset"]` |
+| Class selector     | Matches elements based on the presence of a CSS class.                                                          | `.menu-item`                  |
+
+### Lifecycle
 
 ```
-Lifecycle
 
-Host elements
 
-Styling
 
-Dom APIs
-
-Input & Output
-
-ViewChild()
-
-Inheritance
 
 ...
 ```
 
-### Templates
-```
-Control flow
+### Host elements
 
-Variables
+### Styling
 
-Event listeners
+### Dom APIs
 
-@defer
+### Input & Output
 
-ng-template
+### ViewChild()
 
-ng-content
-```
-### Signals
-
-```
-signal()
-
-computed()
-
-effect()
-
-linkedSignal()
-
-resource()
-```
-
-### Component harness test
-
-Introduction to the concept by using material's component harness
-
-### Testing
-
-### Double data binding
-
-```
-model()
-```
-
-### Dependancy injection
-
-### HTTP Client
-
-### Routing
-
-### Forms
-
-### Cypress
-
-### Directive
-
-### Pipe
-
-### ZoneJS
-
-### i18n
-
-### Other
+### Inheritance
