@@ -21,6 +21,8 @@ ViewChild()
 
 Inheritance
 
+Content projection
+
 ...
 ```
 
