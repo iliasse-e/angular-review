@@ -43,10 +43,25 @@ export interface Product {
         <p>Total : {{price() || '-'}} €</p>
       </section>
 
-      <aside id="recommendations-bloc">
-        <h2>We recommand from same category</h2>
-        <scrollable-list [elements]="getRecommendedProducts.value()" />
-      </aside>
+      @let recommandations = getRecommendedProducts;
+      @let isLoading = recommandations?.isLoading();
+      @let isEmpty = !!recommandations?.value()?.length === false;
+      @let hasValue = recommandations?.hasValue() && !isEmpty && !isLoading;
+
+      @if (recommandations) {
+        <aside id="recommendations-bloc">
+          @if (isEmpty && !isLoading) {
+              <h2>Select a product to explore our recommandations</h2>
+          }
+          @else if (isLoading) {
+            <h2>Loading our recommandations...</h2>
+          }
+          @else if (hasValue) {
+              <h2>We recommand from same category</h2>
+              <scrollable-list [elements]="getRecommendedProducts.value()" />
+          }
+        </aside>
+      }
   `,
   styleUrl: './app.component.css'
 })
