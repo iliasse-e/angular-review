@@ -53,8 +53,9 @@ linkedSignal()
 
 resource()
 ```
+### [Directive](https://github.com/iliasse-e/angular_review/tree/directive)
 
-### Component harness test
+### [Component harness test](https://github.com/iliasse-e/angular_review/tree/harness_testing)
 
 Introduction to the concept by using material's component harness
 
@@ -75,8 +76,6 @@ model()
 ### Forms
 
 ### Cypress
-
-### Directive
 
 ### Pipe
 
