@@ -75,15 +75,15 @@ export class AppComponent {
 
 
   /**
-   * HTTP call to retrieve products
+   * Signals asynchrones (fetch data)
    */
   getProducts = resource({
     loader: async () => (await fetch('https://fakestoreapi.com/products')).json(),
   })
 
   getRecommendedProducts: ResourceRef<Product[]> = resource({
-    loader: async () => (await fetch(`https://fakestoreapi.com/products/category/${this.category()}`)).json(),
-    request: () => this.category()
+    request: () => this.category(),
+    loader: async ({request, previous, abortSignal}) => (await fetch(`https://fakestoreapi.com/products/category/${request}`)).json(),
   })
   
 }
