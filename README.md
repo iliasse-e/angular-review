@@ -61,19 +61,13 @@ Introduction to the concept by using material's component harness
 
 ### Testing
 
-### Double data binding
-
-```
-model()
-```
-
 ### Dependancy injection
 
 ### HTTP Client
 
 ### Routing
 
-### Forms
+### [Forms](https://github.com/iliasse-e/angular_review/tree/forms)
 
 ### Cypress
 
