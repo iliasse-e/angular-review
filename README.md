@@ -55,6 +55,8 @@ resource()
 ```
 ### [Directive](https://github.com/iliasse-e/angular_review/tree/directive)
 
+### [Forms](https://github.com/iliasse-e/angular_review/tree/forms)
+
 ### [Component harness test](https://github.com/iliasse-e/angular_review/tree/harness_testing)
 
 Introduction to the concept by using material's component harness
@@ -67,7 +69,6 @@ Introduction to the concept by using material's component harness
 
 ### Routing
 
-### [Forms](https://github.com/iliasse-e/angular_review/tree/forms)
 
 ### Cypress
 
