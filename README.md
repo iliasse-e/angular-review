@@ -59,6 +59,6 @@ Deux manière de récupérer le host :
 
 - Alternative : Le décorateur HostListener
 
-```
+```typescript
 @HostListener('click', ['$event'])
 ```
