@@ -23,7 +23,7 @@ Les plus connues sont : `NgClass` `NgStyle` `NgModel`
 ### 1 - Création
 
 Decorateur, et selector (entre crochets)
-```
+```typescript
 @Directive({
   selector: '[appSurbrillance]',
 })
@@ -43,7 +43,7 @@ Deux manière de récupérer le host :
 ### 3 - Récupérer un Event
 
 - Relativement un event relatif au scope de l'élément host
-```
+```typescript
   host: {
     '(keyup)': 'updateColor($event)'
   }
@@ -51,7 +51,7 @@ Deux manière de récupérer le host :
 
 
 - Relativement un event relatif au scope de window
-```
+```typescript
   host: {
     '(window:keyup)': 'updateColor($event)'
   }
