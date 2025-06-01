@@ -5,29 +5,29 @@ import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angu
 
 export const nameValidator = (): ValidatorFn => {
   return (control: AbstractControl<string>): {[key: string]: any} | null => {
-      const forbidden = control.value?.toLowerCase().startsWith('du');
+    const forbidden = control.value?.toLowerCase().startsWith('du');
     return forbidden ? {'forbiddenName': {value: control.value}} : null;
   };
 }
 
 export const forbidEmailValidator = (content: string): ValidatorFn => {
-    return (control: AbstractControl<string>): {[key: string]: any} | null => {
-        const forbidden = control.value?.toLowerCase().includes(content.toLowerCase());
-        return forbidden ? {'forbiddenMail': {value: control.value}} : null;
-    };
+  return (control: AbstractControl<string>): {[key: string]: any} | null => {
+    const forbidden = control.value?.toLowerCase().includes(content.toLowerCase());
+    return forbidden ? {'forbiddenMail': {value: control.value}} : null;
+  };
 }
 
 // Validateur pour formulaire (compare deux controls)
 export const passwordMatchValidator: ValidatorFn = (group: AbstractControl<FormGroup>): ValidationErrors | null => {
-    const password = group.get('password');
-    const confirmPassword = group.get('confirmPassword');
-  
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      return { passwordMismatch: true };
-    }
-  
-    return null;
-  };
+  const password = group.get('password');
+  const confirmPassword = group.get('confirmPassword');
+
+  if (password && confirmPassword && password.value !== confirmPassword.value) {
+    return { passwordMismatch: true };
+  }
+
+  return null;
+};
 
 
 // Validateurs asynchrones

@@ -15,9 +15,9 @@ On importe ReactiveFormsModule
 
 1- création d'un groupe via new FormGroup()
 
-2- Dans un objet, je donne la propriété ainsi que new FormControl()
+2- Dans un objet, je renseigne une propriété ainsi que new FormControl()
 
-** Le formControl prend la valeur, et un objet de configuration (à l'intérieur le validateur, ...)
+** Le formControl prend en argument une valeur, et un objet de configuration (à l'intérieur le validateur, ...)
 
 3- On bind le formulaire au template via la directive formGroup ainsi que les control via la directive formControlName
 
@@ -32,7 +32,7 @@ On importe ReactiveFormsModule
 
 ##### Méthodes
 
-```
+```typescript
 
 .addControl()
 
@@ -50,7 +50,7 @@ On importe ReactiveFormsModule
 
 ##### Propritétés
 
-```
+```typescript
 
 .value
 
@@ -71,7 +71,7 @@ On importe ReactiveFormsModule
 
 ##### Méthodes
 
-```
+```typescript
 .setValue()
 
 .patchValue()
@@ -92,7 +92,7 @@ On importe ReactiveFormsModule
 
 ##### Propritétés
 
-```
+```typescript
 .value
 
 .status
@@ -108,13 +108,13 @@ On importe ReactiveFormsModule
 
 #### Quelques méthodes / propriétés
 
-``` 
+```typescript
 .get('formgroup.adress') // permet de récupérer un control, et même un control imbriqué dans un formGroup
 ``` 
 
 Différence value getRawValue : Si un control est disabled, il n'apparaitra pas dans form.value (même s'il possède une valeur)
 
-```
+```typescript
 .contains('formName') 
 .addControl()
 ```
@@ -124,7 +124,8 @@ Différence value getRawValue : Si un control est disabled, il n'apparaitra pas 
 Ajout validateur.
 
 Exemple de validateurs :
-```
+
+```typescript
 min()
 max()
 required()
@@ -137,15 +138,15 @@ maxLength()
 
 Gestion de l'affichage des erreurs dans le template.
 
-```
+```typescript
 control.hasError() 
 control.errors
-
 ```
 
 Exploration de l'objet errors d'un control.
 Exemple d'erreur : 
-``` 
+
+```typescript
 { minlength: { requiredLength: 4, actualLength: 2 } } 
 ```
 
@@ -173,7 +174,7 @@ Ce validateur permet de récupérer les différents controls dans la fonction.
 
 #### Utiliser les propriétés pour détecter l'état des controls :
 
-```
+```typescript
 valid // Renvoie true si le contrôle est valide.
 invalid // Renvoie true si le contrôle est invalide.
 pristine // Renvoie true si le contrôle est intact (non modifié).
@@ -184,7 +185,7 @@ untouched // Renvoie true si le contrôle n'a pas encore perdu le focus.
 
 #### Utiliser les classes CSS générées
 
-```
+```typescript
 ng-valid
 ng-invalid
 ng-pristine
@@ -198,20 +199,32 @@ ng-touched
 Imbrication en incluant un formGroup dans le formGroup.
 
 Dans le template on utilise la directive 
-```
+```typescript
 formGroupName
 ```
 
 Getter dans le template :
 
-```
+```typescript
 form.get('imbricatedForm.control')
 ```
 
 ### 9 - FormArray
 
-#### Hiérarchie des directives 
+Le tableau FormArray permet d'ajouter des FormControl ou des FormGroup.
+Le type FormArray (hérite de AbstractControl) offre de nouvelles méthodes :
+
+```typescript
+formArray.removeAt()
+
+formArray.insert() // Insert a new `AbstractControl` at the given `index` in the array.
+
+formArray.push() // Insert a new `AbstractControl` at the end of the array.
 ```
+
+
+#### Hiérarchie des directives 
+```typescript
 <form [formGroup]="eventForm">              <!-- Niveau 1: FormGroup principal -->
   <div formArrayName="guests">              <!-- Niveau 2: FormArray -->
     <div [formGroupName]="$index">          <!-- Niveau 3: FormGroup individuel -->
@@ -226,4 +239,4 @@ form.get('imbricatedForm.control')
 Utilisation d'un select et de ng-value.
 
 
-### 10 - ControlValueAccessor 
+### 11 - ControlValueAccessor 

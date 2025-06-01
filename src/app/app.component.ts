@@ -23,6 +23,25 @@ interface FormType {
   }>>
 }
 
+const languageLevel = [
+  {
+    level: 0,
+    label: 'notions'
+  },
+  {
+    level: 1,
+    label: 'courant'
+  },
+  {
+    level: 2,
+    label: 'bilingue'
+  },
+  {
+    level: 3,
+    label: 'natif'
+  }
+]
+
 @Component({
   selector: 'app-root',
   imports: [ReactiveFormsModule, JsonPipe],
@@ -33,6 +52,8 @@ interface FormType {
           <label for="firstname">Prénom</label>
           <span class="tooltiptext">Tapez "secret"</span>
           <input formControlName="firstname" type="text" id="firstname" />
+
+          <!-- champ firstname -->
           @let firstname = form.get('firstname');
           @if (firstname?.errors?.['required'] && firstname?.touched) {
             <span class="error">Le champs est obligatoire</span>
@@ -43,6 +64,7 @@ interface FormType {
           }
         </div>
 
+        <!-- champ lastname -->
         <div class="flex flex-col mb-10">
           <label for="lastname">Nom</label>
           <input formControlName="lastname" type="text" id="lastname" />
@@ -51,11 +73,13 @@ interface FormType {
           }
         </div>
 
+        <!-- champ age -->
         <div class="flex flex-col mb-10">
           <label for="age">Age</label>
           <input formControlName="age" type="number" id="age" />
         </div>
 
+        <!-- champ mail -->
         <div class="flex flex-col mb-10">
           <label for="email">E-mail</label>
           <input formControlName="email" type="text" id="email" />
@@ -66,6 +90,7 @@ interface FormType {
           }
         </div>
 
+        <!-- groupe champs adress -->
         <ng-container formGroupName="adress">
           
           <div class="flex flex-col mb-10">
@@ -89,6 +114,7 @@ interface FormType {
 
         </ng-container>
 
+        <!-- tableau champs languages -->
         @if (languages.length) {
           <div formArrayName="languages">
             @for (guest of languages.controls; track $index) {
@@ -130,6 +156,7 @@ interface FormType {
           <input formControlName="confirmPassword" type="password" id="confirmPassword" />
         </div>
 
+        <!-- champ secret -->
         @if (form.contains('secret')) {
           <div class="flex flex-col mb-10">
             <label for="secret">Secret field</label>
@@ -142,7 +169,7 @@ interface FormType {
             <span class="error">Les mots de passe sont incohérents</span>
           }
       </form>
-      <button (click)="toggle()">{{form.controls.email.disabled ? 'Enable email' : 'Disable email'}}</button>
+      <button (click)="toggleEmail()">{{form.controls.email.disabled ? 'Enable email' : 'Disable email'}}</button>
     </div>
 
     <div class="data" style="display: flex;">
@@ -195,7 +222,7 @@ export class AppComponent {
     this.form.reset();
   }
 
-  toggle() {
+  toggleEmail() {
     this.form.controls.email.disabled
       ? this.form.controls.email.enable()
       : this.form.controls.email.disable();
@@ -217,22 +244,3 @@ export class AppComponent {
   }
   
 }
-
-const languageLevel = [
-  {
-    level: 0,
-    label: 'notions'
-  },
-  {
-    level: 1,
-    label: 'courant'
-  },
-  {
-    level: 2,
-    label: 'bilingue'
-  },
-  {
-    level: 3,
-    label: 'natif'
-  }
-]
