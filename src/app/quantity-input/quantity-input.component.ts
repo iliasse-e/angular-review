@@ -1,5 +1,6 @@
-import { Component, model, ModelSignal } from '@angular/core';
+import { Component, inject, model, ModelSignal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { LocalService } from '../app.component';
 
 @Component({
   selector: 'quantity-input',
@@ -17,5 +18,6 @@ import { FormsModule } from '@angular/forms';
   `
 })
 export class QuantityInputComponent {
-  public quantity: ModelSignal<number> = model.required<number>();
+  readonly #localService = inject(LocalService)
+  public quantity = signal<number>(this.#localService.data);
 }
