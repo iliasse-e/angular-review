@@ -61,9 +61,9 @@ resource()
 
 Introduction to the concept by using material's component harness
 
-### Testing
-
 ### [Dependancy injection](https://github.com/iliasse-e/angular_review/tree/dependency-injection)
+
+### Testing
 
 ### HTTP Client
 
