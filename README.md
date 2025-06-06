@@ -61,6 +61,8 @@ resource()
 
 Introduction to the concept by using material's component harness
 
+### [RxJS](https://github.com/iliasse-e/angular_review/tree/rxjs)
+
 ### [Dependancy injection](https://github.com/iliasse-e/angular_review/tree/dependency-injection)
 
 ### Testing
