@@ -87,3 +87,22 @@ const observable = new Observable((observer) => {
 });
 // On doit y souscrire ensuite pour consommer les données
 ```
+
+#
+### L'Observer
+
+Un "observer" dans ce contexte est un objet qui permet de suivre et de réagir aux événements qui se produisent dans un flux de données. L'observer peut être abonné à un Observable, qui est une source de données asynchrones, et peut recevoir les valeurs émises par l'observable et exécuter des actions en réponse à ces valeurs. L'utilisation d'observers avec des observables permet de construire des applications réactives qui peuvent gérer efficacement des données en temps réel.
+
+```typescript
+const observer = {
+  next(x) { console.log(x); },
+  complete() { console.log('Fin de l\'observable'); }
+}
+```
+
+#
+### C'est quoi une subscription sur RxJS ?
+
+Une subscription sur RxJS correspond à l'inscription à un flux de données, ce qui permet de recevoir les mises à jour de ce flux en temps réel.
+
+#

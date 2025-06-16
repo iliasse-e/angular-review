@@ -1,5 +1,5 @@
 import { Component, inject, Injectable, OnInit } from '@angular/core';
-import { interval, Observable, Subscription, switchMap } from 'rxjs';
+import { concatMap, delay, from, interval, map, mergeMap, Observable, of, Subscription, switchMap, take, tap, timer } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
