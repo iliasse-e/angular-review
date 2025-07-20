@@ -55,6 +55,8 @@ resource()
 ```
 ### [Directive](https://github.com/iliasse-e/angular_review/tree/directive)
 
+### [Router](https://github.com/iliasse-e/angular_review/tree/router)
+
 ### [Forms](https://github.com/iliasse-e/angular_review/tree/forms)
 
 ### [Component harness test](https://github.com/iliasse-e/angular_review/tree/harness_testing)
