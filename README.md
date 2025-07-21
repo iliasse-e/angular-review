@@ -67,6 +67,8 @@ Introduction to the concept by using material's component harness
 
 ### [Dependancy injection](https://github.com/iliasse-e/angular_review/tree/dependency-injection)
 
+### [NGRX](https://github.com/iliasse-e/ngrx)
+
 ### Testing
 
 ### HTTP Client
