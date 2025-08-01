@@ -73,9 +73,6 @@ Introduction to the concept by using material's component harness
 
 ### HTTP Client
 
-### Routing
-
-
 ### Cypress
 
 ### Pipe
