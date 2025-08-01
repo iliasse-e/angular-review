@@ -18,7 +18,7 @@ Deux types de directives :
 Les plus connues sont : `NgClass` `NgStyle` `NgModel`
 
 #
-### Custome directive
+### Custom directive
 
 ### 1 - Création
 
