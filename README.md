@@ -23,7 +23,8 @@ Les plus connues sont : `NgClass` `NgStyle` `NgModel`
 ### 1 - Création
 
 Decorateur, et selector (entre crochets)
-```
+
+```typescript
 @Directive({
   selector: '[appSurbrillance]',
 })
@@ -43,7 +44,8 @@ Deux manière de récupérer le host :
 ### 3 - Récupérer un Event
 
 - Relativement un event relatif au scope de l'élément host
-```
+
+```typescript
   host: {
     '(keyup)': 'updateColor($event)'
   }
@@ -51,7 +53,8 @@ Deux manière de récupérer le host :
 
 
 - Relativement un event relatif au scope de window
-```
+
+```typescript
   host: {
     '(window:keyup)': 'updateColor($event)'
   }
@@ -59,6 +62,18 @@ Deux manière de récupérer le host :
 
 - Alternative : Le décorateur HostListener
 
-```
+```typescript
 @HostListener('click', ['$event'])
 ```
+
+### X - Exercice
+
+Créer une liste déroulante custom, associée à un champ de texte.
+
+1- Elle s'affiche lorsqu'on renseigne le champs de texte.
+
+2- Elle disparait lorsqu'on clic à l'extérieur.
+
+Optionnel- Elle disparait lorsqu'on efface le texte.
+
+Utiliser une directive (réutilisable).

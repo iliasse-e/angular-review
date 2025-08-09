@@ -1,28 +1,34 @@
 :host {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
-#recommendations-bloc {
-    height: 100vh;
-    overflow-y: scroll;
-    width: 30%;
+#dropdown-container  {
+  width: 200px;
+  font-size: 20px;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  grid-gap: 20px;
-  width: 50%;
-}
 
-.card {
-  display: grid;
-  grid-template-rows: max-content 200px 1fr;
-}
-
-.card img {
-  object-fit: cover;
+#search-bar {
   width: 100%;
-  height: 100%;
+  box-sizing: border-box;
+  height: 40px;
+  border: #333 3px solid;
+}
+
+#result-container {
+  background: #333;
+  color: #fff;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  padding: 5px 0;
+}
+
+.dropdown-item:hover {
+  text-decoration: underline;
 }

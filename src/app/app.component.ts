@@ -1,30 +1,50 @@
-import { Component, signal, WritableSignal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { InputDirective } from './input.directive';
-import { ButtonDirective } from './button.directive';
+import { Component, linkedSignal, signal, WritableSignal } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClickOutsideDirective } from './click-outside.directive';
 
 @Component({
   selector: 'app-root',
-  imports: [InputDirective, FormsModule, ButtonDirective],
+  imports: [ReactiveFormsModule, FormsModule, ClickOutsideDirective],
   template: `
-      <section id="product-bloc">
-        <label for="quantity">
-          Your color
-          <input 
-            [appInput]="color"
-            name="quantity" 
-            type="text"
-            [ngModel]="color()" 
-            (ngModelChange)="color.set($event)"
-          >
-        </label>
-        <button appButton type="button">Behaviour on click</button>
-      </section>
+    <div id="dropdown-container">
+
+      <input
+        type="text"
+        class="search"
+        id="search-bar"
+        placeholder="Search"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+        (clickOutside)="closeDropdown()"
+      >
+
+      @if(isSearchDropdownOpened()) {
+        <div id="result-container">
+          @for (item of result(); track $index) {
+            <div class="dropdown-item">{{item}}</div>
+          }
+        </div>
+      }
+
+    </div>
   `,
   styleUrl: './app.component.css'
 })
 export class AppComponent {
 
-  color: WritableSignal<string> = signal('green')
-  
+  search = signal('');
+
+  isSearchDropdownOpened = linkedSignal(() => !!this.search().length);
+
+  result: WritableSignal<string[]> = signal([
+    'Joe',
+    'French Toast',
+    'Buy a dog and die alone',
+    'Mean'
+  ]);
+
+  closeDropdown(): void {
+    this.isSearchDropdownOpened.set(false);
+  }
+
 }
