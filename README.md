@@ -6,7 +6,7 @@ Each feature is represented by a branch
 
 ###  [Component](https://github.com/iliasse-e/angular_review/tree/component)
 
-```
+```typescript
 Lifecycle
 
 Host elements
@@ -27,7 +27,8 @@ Content projection
 ```
 
 ### [Templates](https://github.com/iliasse-e/angular_review/tree/templates)
-```
+
+```typescript
 Control flow
 
 Variables
@@ -42,7 +43,7 @@ ng-content
 ```
 ### [Signals](https://github.com/iliasse-e/angular_review/tree/signal)
 
-```
+```typescript
 signal()
 
 computed()
@@ -54,6 +55,10 @@ linkedSignal()
 resource()
 ```
 ### [Directive](https://github.com/iliasse-e/angular_review/tree/directive)
+
+An exemple of a custom directive :
+
+### [Directive click outside](https://github.com/iliasse-e/angular-review/tree/click-outside-directive)
 
 ### [Router](https://github.com/iliasse-e/angular_review/tree/router)
 
