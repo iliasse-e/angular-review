@@ -62,3 +62,9 @@ Deux manière de récupérer le host :
 ```typescript
 @HostListener('click', ['$event'])
 ```
+
+### X - Custom directive
+
+Ici, un exemple d'un custom directive :
+
+### [Directive click outside](https://github.com/iliasse-e/angular-review/tree/click-outside-directive)
