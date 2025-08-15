@@ -18,12 +18,12 @@ Deux types de directives :
 Les plus connues sont : `NgClass` `NgStyle` `NgModel`
 
 #
-### Custome directive
+### Custom directive
 
 ### 1 - Création
 
 Decorateur, et selector (entre crochets)
-```
+```typescript
 @Directive({
   selector: '[appSurbrillance]',
 })
@@ -43,7 +43,7 @@ Deux manière de récupérer le host :
 ### 3 - Récupérer un Event
 
 - Relativement un event relatif au scope de l'élément host
-```
+```typescript
   host: {
     '(keyup)': 'updateColor($event)'
   }
@@ -51,7 +51,7 @@ Deux manière de récupérer le host :
 
 
 - Relativement un event relatif au scope de window
-```
+```typescript
   host: {
     '(window:keyup)': 'updateColor($event)'
   }
@@ -59,6 +59,12 @@ Deux manière de récupérer le host :
 
 - Alternative : Le décorateur HostListener
 
-```
+```typescript
 @HostListener('click', ['$event'])
 ```
+
+### X - Custom directive
+
+Ici, un exemple d'un custom directive :
+
+### [Directive click outside](https://github.com/iliasse-e/angular-review/tree/click-outside-directive)
