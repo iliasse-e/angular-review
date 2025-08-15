@@ -4,10 +4,11 @@ import { TextColorDirective } from './directive/text-color.directive';
 import { AlertDirective } from './directive/alert.directive';
 import { HoverDirective } from "./directive/hover.directive";
 import { CountDirective } from './directive/count.directive';
+import { TooltipDirective } from "./directive/tooltip.directive";
 
 @Component({
   selector: 'app-root',
-  imports: [TextColorDirective, FormsModule, AlertDirective, HoverDirective, CountDirective],
+  imports: [TextColorDirective, FormsModule, AlertDirective, HoverDirective, CountDirective, TooltipDirective],
   template: `
     <h1 #text>Titre de la page</h1>
 
@@ -33,11 +34,16 @@ import { CountDirective } from './directive/count.directive';
       <h3>Directive 4 : Affiche compteur au clic</h3>
       <button count>Coumpter les clics</button>
 
+      <h3>Directive 5 : Affiche une infobulle au survol du champ</h3>
+      <textarea [tooltip]="inputText" [(ngModel)]="inputText" [ngModelOptions]="{updateOn: 'change'}">{{ inputText }}</textarea>
+
     </section>
   `,
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
+  inputText = '';
 
   textElement = viewChild<ElementRef<HTMLParagraphElement>>('text');
 
