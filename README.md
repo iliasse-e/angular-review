@@ -1,32 +1,59 @@
-# Angular Review
+# Component communication
 
-This repository reviews all the new features / Api / tools that comes up with the last version of Angular (17 to 19).
-It also focuses on important part and tools of the framework.
+Key words : Input signals, init value, transform, function.
 
-Each theme is represented by a branch.
+### Input signals
 
-### Signals
+The input function allows declaration of Angular inputs in directives and components.
 
-computed()
+There are two variants of inputs that can be declared:
 
-effect()
+    - Optional inputs with an initial value.
+    - Required inputs that consumers need to set.
 
-linkedSignal()
+```typescript
+function input<T>(): InputSignal<T | undefined>;
+```
 
-model()
+### Required
 
-### Component harness test
+From Angular 16, we could use the property `required: true` in the option object in the @Input decorator.
 
-Introduction to the concept by using material's component harness
+From latests versions, we can use the following syntax :
 
-### @defer
+```typescript
+input.required()
+```
 
-### API Resource
+### Init value
 
-### Dependancy injection
+For this case, we don't transform the data :
 
-### Routing
+```typescript
+function input<T>(initialValue: T, opts?: InputOptionsWithoutTransform<T> | undefined): InputSignal<T>;
+```
 
-### Forms
+If we want to transform data, we'll use this interface :
 
-### Autre
+```typescript
+function input<T, TransformT>(initialValue: T, opts: InputOptionsWithTransform<T, TransformT>): InputSignalWithTransform<T, TransformT>;
+```
+
+We'll take an exemple on the next section ...
+
+
+### Transform input data
+
+With `InputSignalWithTransform` :
+
+```typescript
+disabled = input(false, {    transform: (v: string|boolean) => convertToBoolean(v),  }); // InputSignalWithTransform<boolean, string|boolean>
+```
+
+Angular provides us some transform methods as `numberAttribute` or `booleanAttribute` available in @angular/core
+
+[To go further on input signal](https://angular.dev/api/core/input)
+
+### model()
+
+...
