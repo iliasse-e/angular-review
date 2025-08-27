@@ -66,10 +66,6 @@ An exemple of a custom directive :
 
 ### [Forms](https://github.com/iliasse-e/angular_review/tree/forms)
 
-### [Component harness test](https://github.com/iliasse-e/angular_review/tree/harness_testing)
-
-Introduction to the concept by using material's component harness
-
 ### [RxJS](https://github.com/iliasse-e/angular_review/tree/rxjs)
 
 ### [Dependancy injection](https://github.com/iliasse-e/angular_review/tree/dependency-injection)
@@ -77,6 +73,8 @@ Introduction to the concept by using material's component harness
 ### [NGRX](https://github.com/iliasse-e/ngrx)
 
 ### Testing
+
+### [Testing harness](https://github.com/iliasse-e/angular_review/tree/harness_testing)
 
 ### HTTP Client
 
