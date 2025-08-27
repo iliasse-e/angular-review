@@ -1,23 +1,59 @@
-# Angular19
+# Harness
 
-Montée en compétence des nouveautés depuis Angular 17-19 et revue des concepts important de l'outil
+[Documentation](https://material.angular.dev/guide/using-component-harnesses)
 
-Chaque thématiqué est représenté par une branche du dépot.
+### Goals :    
+- Harnesses make tests easier to read and understand with straightforward APIs.
+- Harnesses make tests more robust and less likely to break when updating Angular Material.
 
-### Signals
+### Getting started :
 
-computed()
+```typescript
+import {HarnessLoader} from '@angular/cdk/testing'; // The foundation for all test harnesses lives there
+```
 
-linkedSignal()
+From the `HarnessEnvironment`, you can get a `HarnessLoader` instance,
+which you will use to load Angular Material component harnesses.
 
-model()
 
-### Component harness test
+### Loading an Angular Material harness 
 
-### @defer
+```typescript
+let loader: HarnessLoader;
+```
 
-### API Resource
+```typescript
+  beforeEach(async () => {
 
-### Dependancy injection
+    TestBed.configureTestingModule({
+      imports: [ChildComponent]
+    });
 
-### Autre
+    // This code creates a fixture for ChildComponent and then creates a HarnessLoader for that fixture.
+    fixture = TestBed.createComponent(ChildComponent);
+    fixture.detectChanges();
+    loader = TestbedHarnessEnvironment.loader(fixture);
+    // The HarnessLoader can then locate Angular Material components inside ChildComponent and create harnesses for them
+  })
+```
+````typescript
+  describe('When launch', () => {
+    it('should work', async () => {
+      // The HarnessLoader provides two methods that can be used to load harnesses, getHarness and getAllHarnesses
+
+      const firstInput = await loader.getHarness(MatInputHarness); // gets a harness for the first instance of the matching component
+      const inputs = await loader.getAllHarnesses(MatInputHarness); // gets a list of harnesses, one for each instance of the corresponding component
+    });
+
+    // You can load harnesses for a sub-section of the DOM within ChildComponent with the getChildLoader method on HarnessLoader
+    it('should work', async () => {
+      // For example, say that we know ChildComponent has a div, <div class="footer">, and we want the button inside that specific <div>.
+      const footerLoader = await loader.getChildLoader('.footer');
+      const footerInput = await footerLoader.getHarness(MatInputHarness);
+
+      // can also use the static with method implemented on all Angular Material component :
+      // Harness for mat-input whose id is 'firstname'.
+      const firstname = await loader.getHarness(MatInputHarness.with({selector: '#firstname'}));
+    });
+  })
+```
