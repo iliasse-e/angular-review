@@ -72,13 +72,15 @@ An exemple of a custom directive :
 
 ### [NGRX](https://github.com/iliasse-e/ngrx)
 
-### Testing
+### Testing :
 
-### [Testing harness](https://github.com/iliasse-e/angular_review/tree/harness_testing)
+#### [Testing harness](https://github.com/iliasse-e/angular_review/tree/harness_testing)
+
+#### [Testing library](https://github.com/iliasse-e/angular_review/tree/testing_library)
+
+#### Cypress
 
 ### HTTP Client
-
-### Cypress
 
 ### Pipe
 
