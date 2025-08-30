@@ -76,7 +76,7 @@ An exemple of a custom directive :
 
 #### [Testing harness](https://github.com/iliasse-e/angular_review/tree/harness_testing)
 
-#### [Testing library](https://github.com/iliasse-e/angular_review/tree/testing_library)
+#### [Testing library](https://github.com/iliasse-e/angular_review/tree/testing-library)
 
 #### Cypress
 
