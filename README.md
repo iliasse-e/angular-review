@@ -56,11 +56,14 @@ linkedSignal()
 
 resource()
 ```
-### [Directive](https://github.com/iliasse-e/angular_review/tree/directive)
+
+### Directive :
+
+#### [Directive](https://github.com/iliasse-e/angular_review/tree/directive)
 
 An exemple of a custom directive :
 
-### [Directive click outside](https://github.com/iliasse-e/angular-review/tree/click-outside-directive)
+#### [Directive click outside](https://github.com/iliasse-e/angular-review/tree/click-outside-directive)
 
 ### [Router](https://github.com/iliasse-e/angular_review/tree/router)
 
