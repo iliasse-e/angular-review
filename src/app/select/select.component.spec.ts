@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { SelectComponent } from './select.component';
-import {render, screen} from '@testing-library/angular'
-import {logRoles} from '@testing-library/dom'
+import {render, screen} from '@testing-library/angular';
+import {userEvent} from '@testing-library/user-event';
 
 const OPTIONS = [
   {key:'p1', label:'option 1'},
@@ -10,39 +10,16 @@ const OPTIONS = [
 
 describe('SelectComponent', () => {
 
-  it('should render', async () => {
+  it('should handle select option behaviour', async () => {
     await render(SelectComponent, {
       inputs: {options: OPTIONS}
     })
+    const user = userEvent.setup();
+    const select = screen.getByLabelText('Products');
 
-    expect(screen.getByText('Products')).toBeVisible();
-  });
+    await user.selectOptions(select, 'p2');
 
-  it('should log debug', async () => {
-    await render(SelectComponent, {
-      inputs: {options: OPTIONS}
-    })
-
-    // Logs element (that we give as arg) or entire document
-    screen.debug(screen.getByRole('option', { name: /option 1/i }));
-  });
-
-    it('should expose playground', async () => {
-    await render(SelectComponent, {
-      inputs: {options: OPTIONS}
-    })
-
-    // Exposes link of playground (of element or entire document)
-    screen.logTestingPlaygroundURL(screen.getByRole('option', { name: /option 1/i }));
-  });
-
-      it('should log roles', async () => {
-    await render(SelectComponent, {
-      inputs: {options: OPTIONS}
-    })
-
-    // Exposes link of playground (of element or entire document)
-    logRoles(screen.getByLabelText('Products'));
+    expect(select).toHaveDisplayValue('option 2');
   });
 
 });

@@ -5,6 +5,12 @@ Agnostique de la logique interne, on manipule juste le visible. Cela permet d'ê
 
 Bye bye TestBed, ... Ici, `screen` devient le point central de la méthodologie de test.
 
+De la [documentation](https://timdeschryver.dev/blog/getting-the-most-value-out-of-your-angular-component-tests) intéressante sur le sujet 
+
+Exemples de tests sur différents composants :
+
+[Exemples repository](https://github.com/testing-library/angular-testing-library/tree/main/apps/example-app/src/app/examples)
+
 Ici, on check les composants :
 
 [Select spec file](./src/app/select/select.component.spec.ts)
@@ -79,4 +85,24 @@ listitem:
 <li />
 <li />
 --------------------------------------------------
+```
+
+## User Interactions
+
+user-event is a companion library for Testing Library that simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
+
+```typescript
+import userEvent from '@testing-library/user-event'
+
+// inlining
+test('trigger some awesome feature when clicking the button', async () => {
+  const user = userEvent.setup()
+  // Import `render` and `screen` from the framework library of your choice.
+  // See https://testing-library.com/docs/dom-testing-library/install#wrappers
+  render(<MyComponent />)
+
+  await user.click(screen.getByRole('button', {name: /click me!/i}))
+
+  // ...assertions...
+})
 ```
