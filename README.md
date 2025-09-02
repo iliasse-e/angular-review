@@ -87,6 +87,23 @@ listitem:
 --------------------------------------------------
 ```
 
+## Assertion
+
+We can use :
+
+```typescript
+  expect(screen.queryByText(/The Hunger Games/)).not.toBeInTheDocument();
+```
+
+But also :
+
+
+```typescript
+  await screen.findByText(/Borrowed Book: Animal Farm by George Orwell/); // If not found throw error (unlike screen.getByText())
+```
+
+
+
 ## User Interactions
 
 user-event is a companion library for Testing Library that simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
