@@ -87,7 +87,7 @@ An exemple of a custom directive :
 
 ### Pipe
 
-### ZoneJS
+### Zone
 
 ### i18n
 
