@@ -1,108 +1,142 @@
-# Testing library
+# Cypress
 
-La testing library permet d'implémenter un paradigme de test qui se rapproche de l'utilisateur.
-Agnostique de la logique interne, on manipule juste le visible. Cela permet d'être **lisible**, et aussi **maintenable**
+Permet les tests end-to-end, tests de composants, tests d'accessibilité, et autre...
 
-Bye bye TestBed, ... Ici, `screen` devient le point central de la méthodologie de test.
+[Documentation](https://docs.cypress.io/app/get-started/)
 
-De la [documentation](https://timdeschryver.dev/blog/getting-the-most-value-out-of-your-angular-component-tests) intéressante sur le sujet 
+Exemples de tests dans le dossier cypress.
 
-Exemples de tests sur différents composants :
+Exemple de l'interface :
 
-[Exemples repository](https://github.com/testing-library/angular-testing-library/tree/main/apps/example-app/src/app/examples)
+![alt text](1__anXEmf6moR_i-YkPEWhRg.webp)
 
-Ici, on check les composants :
+Celle ci permet de suivre la chronologie des actions, des assertions de test et des comportements (comme les requêtes HTTP)
 
-[Select spec file](./src/app/select/select.component.spec.ts)
 
-## Logger
+## Commencer
 
-### `screen.logTestingPlaygroundURL()`
+```
+npx cypress open
+```
 
-Provide a link to browser's playground to expose all elements, and you can interact with it to see the selectors you should choose for a DOM element.
-For debugging using [testing-playground](https://testing-playground.com/)
+## Tester un composant
+
+Utilisation de `.mount()`
 
 ```typescript
-import {screen} from '@testing-library/dom'
-
-// log entire document to testing-playground
-screen.logTestingPlaygroundURL()
-// log a single element
-screen.logTestingPlaygroundURL(screen.getByText('test'))
-
-```
-
-### `screen.debug()`
-
-Pints the DOM inside the console.
-This method is essentially a shortcut for `console.log(prettyDOM())`
-
-```typescript
-import {screen} from '@testing-library/dom'
-
-document.body.innerHTML = `
-  <button>test</button>
-  <span>multi-test</span>
-  <div>multi-test</div>
-`
-
-// debug document
-screen.debug()
-// debug single element
-screen.debug(screen.getByText('test'))
-// debug multiple elements
-screen.debug(screen.getAllByText('multi-test'))
-```
-
-
-### `screen.logRoles()`
-
-rints out all ARIA roles within the tree of the given DOM element. ARIA roles are the primary selectors you should reach for in the first place.
-
-```typescript
-import {logRoles} from '@testing-library/dom'
-
-const nav = document.createElement('nav')
-nav.innerHTML = `
-<ul>
-  <li>Item 1</li>
-  <li>Item 2</li>
-</ul>`
-
-logRoles(nav)
-```
-
-Result :
-
-```
-navigation:
-<nav />
---------------------------------------------------
-list:
-<ul />
---------------------------------------------------
-listitem:
-<li />
-<li />
---------------------------------------------------
-```
-
-## User Interactions
-
-user-event is a companion library for Testing Library that simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
-
-```typescript
-import userEvent from '@testing-library/user-event'
-
-// inlining
-test('trigger some awesome feature when clicking the button', async () => {
-  const user = userEvent.setup()
-  // Import `render` and `screen` from the framework library of your choice.
-  // See https://testing-library.com/docs/dom-testing-library/install#wrappers
-  render(<MyComponent />)
-
-  await user.click(screen.getByRole('button', {name: /click me!/i}))
-
-  // ...assertions...
+describe('Jumbotron component tests', () => {
+ it('should display Jumbotron component', () => {
+   cy.mount(JumbotronComponent); // Monte le composant
+   cy.get("h1").contains("Welcome to our store").should("be.visible"); // Check l'écran
+ })
 })
 ```
+
+### Gestion des dépendances
+
+```typescript
+cy.mount(CurrencySwitcherComponent, {
+    declarations: [ChildComponent],
+    providers: [CurrencyService],
+    imports: [HttpClientModule]
+  });
+```
+
+### Input data
+
+```typescript
+cy.mount(JumbotronComponent,{
+    componentProperties: {
+       // title is an @Input() of JumbotronComponent
+       title: "My custom title"
+    }
+});
+```
+
+Ou bien, utiliser la syntaxe de template d'Angular :
+
+```typescript
+cy.mount(`<app-jumbotron title='My title' />`,{
+    declarations: [JumbotronComponent]
+   }
+);
+```
+
+### Output
+
+```typescript
+cy.mount(`
+    <app-license-plate [plate]="plate"
+                (buttonClick)="buttonClick.emit($event)" >
+      </app-license-plate>`,
+  {declarations: [LicensePlateComponent],
+    componentProperties:{
+        plate: CALIFORNIA_PLATE,
+        buttonClick: createOutputSpy("buttonClick")
+    }});
+```
+
+`createOutputSpy()` créé un Event emitter Angular à tacker lorsque l'ouput emet une valeur, comme l'exemple qui suit :
+
+
+```typescript
+cy.get("@buttonClick").should("have.been.calledWith", id);
+```
+
+### Comment mocker des dépendances ?
+
+``cy.mount`` permet comme avec TestBed de renseigner les dépendances.
+
+```typescript
+cy.mount(`<app-currency-switcher />`, {
+    declarations: [CurrencySwitcherComponent],
+    // We replace CurrencyService with a fake one!
+    providers: [{provide: CurrencyService, useValue: FakeCurrencyService}],
+  });
+```
+
+On peut aussi suivre les requêtes HTTP grâce à `.intercept()` et injecter des données mockés.
+
+```typescript
+// We intercept any request made to /rates and return the second parameter
+// as our "fake" response, here: {GBP: 2, EUR: 3, USD: 1}
+cy.intercept('/rates', {GBP: 2, EUR: 3, USD: 1});
+cy.mount(`<app-currency-switcher />`, {
+      declarations: [CurrencySwitcherComponent],
+      // Let's use the real service that makes HTTP requests to /rates
+      providers: [CurrencyService],
+    });
+```
+
+
+## Test end to end
+
+`.visit()`
+
+```typescript
+describe('My First Test', () => {
+  it('Visits the Kitchen Sink', () => {
+    cy.visit('https://example.cypress.io')
+  })
+})
+```
+
+Pour trouver un élément dans le DOM, on utilise `cy.contains()`
+
+```typescript
+
+```
+
+Et `cy.contains()` permet aussi d'effectuer des actions sur l'élément :
+
+```typescript
+cy.contains('Delete User').click() // On peut utiliser `.get()` qui permet aussi de récupérer un élément du DOM pour effectuer cette action
+```
+
+`cy.contains()` throw une erreur si l'élément n'est pas trouvé.
+
+```typescript
+
+```
+
+
