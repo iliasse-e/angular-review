@@ -9,7 +9,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
     <p>My name is {{name.value}}</p>
 
     <label for="name-control">Name</label>
-    <input type="text" id="name-control" [formControl]='name'>
+    <input type="text" id="name-control" [formControl]='name' [className]="(name.touched && name.errors) && 'error'">
 
     @if (name.touched && name.errors?.['required']) {
       <pre>Name is required</pre>
@@ -19,6 +19,13 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
     }
 
   `,
+  styles: [
+    `
+      input.error {
+        border-color: red;
+      }
+    `
+  ],
 })
 export class InputComponent {
 

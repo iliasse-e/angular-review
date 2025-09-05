@@ -4,9 +4,9 @@ Permet les tests end-to-end, tests de composants, tests d'accessibilité, et aut
 
 [Documentation](https://docs.cypress.io/app/get-started/)
 
-Exemples de tests dans le dossier cypress.
+Exemples de tests dans le dossier `/cypress`.
 
-La migration des tests de composants (de Testing Library à Cypress) sont dans les dossiers composant de l'application Angular.
+La migration des tests de composants (de Testing Library à Cypress) sont dans les dossiers `src/app` de l'application Angular.
 
 Exemple de l'interface Cypress :
 

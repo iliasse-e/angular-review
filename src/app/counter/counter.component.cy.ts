@@ -2,13 +2,13 @@ import { CounterComponent } from "./counter.component";
 
 describe('CounterComponent', () => {
 
-  it('should create', async () => {
+  it('should create', () => {
     cy.mount(CounterComponent)
 
     cy.get('[data-cy=count]').should('have.text', 0);
   });
 
-  it('should increment', async () => {
+  it('should increment', () => {
     cy.mount(CounterComponent)
 
     cy.get('[data-cy=increment]').click();
