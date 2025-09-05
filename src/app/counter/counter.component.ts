@@ -4,9 +4,9 @@ import { Component, signal } from '@angular/core';
   selector: 'app-counter',
   imports: [],
   template: `
-    <button (click)="decrement()">Decrement</button>
-    <span data-testid="value">{{ count() }}</span>
-    <button (click)="increment()">Increment</button>
+    <button data-cy="decrement" (click)="decrement()">Decrement</button>
+    <span data-cy="count">{{ count() }}</span>
+    <button data-cy="increment" (click)="increment()">Increment</button>
   `
 })
 export class CounterComponent {

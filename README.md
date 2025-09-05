@@ -6,7 +6,9 @@ Permet les tests end-to-end, tests de composants, tests d'accessibilité, et aut
 
 Exemples de tests dans le dossier cypress.
 
-Exemple de l'interface :
+La migration des tests de composants (de Testing Library à Cypress) sont dans les dossiers composant de l'application Angular.
+
+Exemple de l'interface Cypress :
 
 ![alt text](1__anXEmf6moR_i-YkPEWhRg.webp)
 
@@ -81,6 +83,21 @@ cy.mount(`
 
 ```typescript
 cy.get("@buttonClick").should("have.been.calledWith", id);
+```
+
+### Test id
+
+L'équivalent du `test-id` sur cypress est l'attribut `data-cy` :
+
+```typescript
+<span data-cy="counter">{{ count }}</span>
+```
+
+```typescript
+it('stepper should default to 0', () => {
+  cy.mount(StepperComponent)
+  cy.get('[data-cy=counter]').should('have.text', '0')
+})
 ```
 
 ### Comment mocker des dépendances ?

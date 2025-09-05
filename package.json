@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "jest"
+    "test": "jest",
+    "cy:run": "start-server-and-test start http://localhost:4200 cypress open"
   },
   "private": true,
   "dependencies": {
