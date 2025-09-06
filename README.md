@@ -81,6 +81,8 @@ An exemple of a custom directive :
 
 #### [Testing library](https://github.com/iliasse-e/angular_review/tree/testing-library)
 
+End to end & component testing :
+
 #### [Cypress](https://github.com/iliasse-e/angular_review/tree/cypress)
 
 ### HTTP Client
