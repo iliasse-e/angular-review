@@ -1,242 +1,88 @@
-# Forms
+# Signal Forms
 
-### Introduction
+## Introduction
 
-Template driven - Data driven (création du modèle dans la classe pour ensuite le binder au template).
+Avec Signal Forms, le modèle du formulaire est défini par un signal synchronisé automatiquement avec les champs du formulaire auxquels il est lié, offrant une expérience ergonomique avec une sécurité de type complète. Une validation puissante, centralisée et basée sur des schémas est intégrée.
 
-Chaque control est composé d'une value, d'un status et d'un validateur.
+Les nouveautés se trouvent dans le paquet `'@angular/forms/signals'`.
 
-On peut imbriquer des formulaires dans un formArray
-
-
-### 1 - Création
-
-On importe ReactiveFormsModule
-
-1- création d'un groupe via new FormGroup()
-
-2- Dans un objet, je renseigne une propriété ainsi que new FormControl()
-
-** Le formControl prend en argument une valeur, et un objet de configuration (à l'intérieur le validateur, ...)
-
-3- On bind le formulaire au template via la directive formGroup ainsi que les control via la directive formControlName
-
-** Ce binding empêche le reload de la page une fois qu'on submit le formulaire
-
-4- On bind l'Event (submit) à une fonction
-
-
-### 2 - Les classes héritant de AbstractControl
-
-#### API de FormGroup
-
-##### Méthodes
+### 1. On créé un signal avec l'ensemble des champs
 
 ```typescript
+interface LoginData {
+  email: string;
+  password: string;
+}
+const loginModel = signal<LoginData>({
+  email: '',
+  password: '',
+});
+```
+### 2. On créé un `FieldTree` grâce à la méthode `form()`
 
-.addControl()
+On utilise la méthode `form()` qui prend en paramètre le signal afin de créer un (formulaire) de type `FieldTree` (Generic Type)
 
-.removeControl()
+```typescript
+const loginForm = form(loginModel);
 
-.get()
+// Access fields directly by property name
+loginForm.email;
+loginForm.password;
+```
+### 3. la directive `[field]`
 
-.setValue()
+On relie les <input> avec une simple directive [field] et non plus avec les directives multiples de `ReactiveForm`.
 
-.patchValue()
+```typescript
+<input type="text" [field]="profileForm.firstName">
+```
+### 4. Ajout de validateurs
 
-.contains()
+```typescript
+import {form, Field, required, email} from '@angular/forms/signals';
 
+loginForm = form(this.loginModel, (fieldPath) => {
+  required(fieldPath.email, {message: 'Email is required'});
+  email(fieldPath.email, {message: 'Enter a valid email address'});
+});
 ```
 
-##### Propritétés
+Puis on peut accéder dans le fichier .ts ou dans le template à ces validateurs (ex: `loginForm().errors()` dans le template).
+
+Le formulaire offrira des méthodes accesseurs comme : `.invalid()`, `.dirty()`, `.errors()`, `.touched()`, similaires au ``FormControl`` 
+(mais aussi des nouvelles comme `.hidden()`, `.disabledReasons()`).
+
+Ainsi que des méthodes mutateurs comme : `.reset()`, `.markAsDirty()`.
+
+### 5. Création de signaux dérivés
+
+Et comme tout est réactif sans devoir écrire une tonne de code complexe, voici le minimalisme que permet l'API signals.
 
 ```typescript
-
-.value
-
-.status
-
-.valid
-
-.pristine
-
-.touched
-
-.controls
-
+isFirstNameValid = computed(() => this.profileForm.firstName().valid())
 ```
 
+### 6. Disable
 
-#### API de FormControl
+On peut utiliser les validateurs pour appliquer une opération de désactivation.
 
-##### Méthodes
-
-```typescript
-.setValue()
-
-.patchValue()
-
-.reset()
-
-.disable()
-
-.enable()
-
-.markAsTouched()
-
-.markAsUntouched()
-
-.updateValueAndValidity()
-
+```ts
+export class Order {
+  orderModel = signal({
+    total: 25,
+    couponCode: ''  
+  }) 
+  
+  orderForm = form(this.orderModel, schemaPath => {
+    disabled(schemaPath.couponCode, ({valueOf}) => valueOf(schemaPath.total) < 50)  
+    }
+  )
+}
 ```
 
-##### Propritétés
+```ts
+    @if (orderForm.couponCode().disabled()) {
+      <p class="info">Coupon code is only available for orders over $50</p>
+      }
+    ```
 
-```typescript
-.value
-
-.status
-
-.valid
-
-.pristine
-
-.touched
-
-.dirty
-```
-
-#### Quelques méthodes / propriétés
-
-```typescript
-.get('formgroup.adress') // permet de récupérer un control, et même un control imbriqué dans un formGroup
-``` 
-
-Différence value getRawValue : Si un control est disabled, il n'apparaitra pas dans form.value (même s'il possède une valeur)
-
-```typescript
-.contains('formName') 
-.addControl()
-```
-
-### 3 - Validateur synchrone
-
-Ajout validateur.
-
-Exemple de validateurs :
-
-```typescript
-min()
-max()
-required()
-requiredTrue() // pour checkbox
-compose()
-pattern()
-maxLength()
-...
-```
-
-Gestion de l'affichage des erreurs dans le template.
-
-```typescript
-control.hasError() 
-control.errors
-```
-
-Exploration de l'objet errors d'un control.
-Exemple d'erreur : 
-
-```typescript
-{ minlength: { requiredLength: 4, actualLength: 2 } } 
-```
-
-A noter : Les erreurs dans l'objet errors sont organisé par ordre et peut en afficher qu'un à la fois (ex: l'objet renvoie required exclusivement).
-
-
-### 4 - Validateur personnalisé
-
-On créé une fonction en implémentant l'interface ValidatorFn.
-
-
-### 5 - Validateur de formGroup
-
-On créé un validateur qui compare plusieurs controls, et que l'on déclare au niveau du form et non des controls.
-
-Ce validateur permet de récupérer les différents controls dans la fonction.
-
-
-### 6 - Validateur asynchrone
-
-[Documentation concrète](https://angular.fr/reactive-forms/create-validator-async.html)
-
-
-### 7 - UX et gestion d'erreur
-
-#### Utiliser les propriétés pour détecter l'état des controls :
-
-```typescript
-valid // Renvoie true si le contrôle est valide.
-invalid // Renvoie true si le contrôle est invalide.
-pristine // Renvoie true si le contrôle est intact (non modifié).
-dirty // Renvoie true si le contrôle a été modifié.
-touched // Renvoie true si le contrôle a perdu le focus.
-untouched // Renvoie true si le contrôle n'a pas encore perdu le focus.
-```
-
-#### Utiliser les classes CSS générées
-
-```typescript
-ng-valid
-ng-invalid
-ng-pristine
-ng-dirty
-ng-untouched
-ng-touched
-```
-
-### 8 - Formulaires imbriqués
-
-Imbrication en incluant un formGroup dans le formGroup.
-
-Dans le template on utilise la directive 
-```typescript
-formGroupName
-```
-
-Getter dans le template :
-
-```typescript
-form.get('imbricatedForm.control')
-```
-
-### 9 - FormArray
-
-Le tableau FormArray permet d'ajouter des FormControl ou des FormGroup.
-Le type FormArray (hérite de AbstractControl) offre de nouvelles méthodes :
-
-```typescript
-formArray.removeAt()
-
-formArray.insert() // Insert a new `AbstractControl` at the given `index` in the array.
-
-formArray.push() // Insert a new `AbstractControl` at the end of the array.
-```
-
-
-#### Hiérarchie des directives 
-```typescript
-<form [formGroup]="eventForm">              <!-- Niveau 1: FormGroup principal -->
-  <div formArrayName="guests">              <!-- Niveau 2: FormArray -->
-    <div [formGroupName]="$index">          <!-- Niveau 3: FormGroup individuel -->
-      <input formControlName="name">        <!-- Niveau 4: FormControl -->
-    </div>
-  </div>
-</form>
-```
-
-### 10 - Ng-select
-
-Utilisation d'un select et de ng-value.
-
-
-### 11 - ControlValueAccessor 

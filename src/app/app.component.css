@@ -1,86 +1,27 @@
-.form-container {
-  width: 100%;
+form, h2 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   max-width: 400px;
-  margin: auto;
+  padding: 1rem;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
 }
-
-.flex-col {
-  padding: 0;
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
-
 input {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
+  padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  height: 20px;
-  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: inherit;
 }
-
-button {
-  width: 100%;
-  background-color: #af4c4c;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+p {
+  margin: 0.5rem 0;
+  color: #666;
 }
-
-button:hover {
-  background-color: #a04545;
-}
-
-#submit-btn {
-  background-color: #4CAF50;
-}
-
-#submit-btn:hover {
-  background-color: #45a049;
-}
-
-div {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
 .error {
-  color: #a04545;
-  font-size: smaller;
-}
-
-input.ng-valid.ng-dirty {
-  border: #4CAF50 2px solid;
-}
-
-input.ng-invalid.ng-touched {
-  border: #af4c4c 2px solid;
+  color: crimson;
 }
