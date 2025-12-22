@@ -67,7 +67,12 @@ An exemple of a custom directive :
 
 ### [Router](https://github.com/iliasse-e/angular_review/tree/router)
 
-### [Forms](https://github.com/iliasse-e/angular_review/tree/forms)
+### Forms :
+
+#### [Forms](https://github.com/iliasse-e/angular_review/tree/forms)
+
+#### [Signal Forms](https://github.com/iliasse-e/angular_review/tree/signal-form)
+
 
 ### [RxJS](https://github.com/iliasse-e/angular_review/tree/rxjs)
 
