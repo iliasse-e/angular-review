@@ -25,3 +25,20 @@ p {
 .error {
   color: crimson;
 }
+
+#form-state-light {
+  border-radius: 100%;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+
+  &.invalid {
+    background-color: red;
+  }
+  &.valid {
+    background-color: green;
+  }
+  &.pristine {
+    background-color: gray;
+  }
+}

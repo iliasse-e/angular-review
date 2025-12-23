@@ -6,6 +6,10 @@ Avec Signal Forms, le modèle du formulaire est défini par un signal synchronis
 
 Les nouveautés se trouvent dans le paquet `'@angular/forms/signals'`.
 
+- [La documentation officielle](https://angular.dev/guide/forms/signals/overview)
+
+- [L'article de Angular love](https://angular.love/signal-forms-in-angular-21-complete-guide)
+
 ### 1. On créé un signal avec l'ensemble des champs
 
 ```typescript
@@ -31,12 +35,16 @@ loginForm.password;
 ```
 ### 3. la directive `[field]`
 
-On relie les <input> avec une simple directive [field] et non plus avec les directives multiples de `ReactiveForm`.
+On relie les <input> avec une simple directive ``[field]`` et non plus avec les directives multiples de `ReactiveForm`.
 
 ```typescript
 <input type="text" [field]="profileForm.firstName">
 ```
-### 4. Ajout de validateurs
+### 4. Validateurs
+
+### Validateurs prédéfinis
+
+Il a les validateurs classiques, qu'on déclare en même temps que le formulaire :
 
 ```typescript
 import {form, Field, required, email} from '@angular/forms/signals';
@@ -53,6 +61,32 @@ Le formulaire offrira des méthodes accesseurs comme : `.invalid()`, `.dirty()`,
 (mais aussi des nouvelles comme `.hidden()`, `.disabledReasons()`).
 
 Ainsi que des méthodes mutateurs comme : `.reset()`, `.markAsDirty()`.
+
+### Validateurs customs
+
+On utilise la fonction `validate()` pour créer un validateur custom.
+Celui ci renvoi un objet d'erreur ou ``undefined``/``null``
+
+```ts
+const registrationForm = form(this.model, (f) => {
+  // Custom validator - function receives context with value
+  validate(f.username, ({ value }) => {
+    const username = value();
+    if (username.includes(' ')) {
+      return customError({ kind: 'no-spaces', message: 'Name cannot contain spaces' });
+    }
+    return undefined; // no error
+  });
+```
+
+Le contexte de validation nous donne accès à :
+
+- ``value()`` la valeur du champ
+- ``valueOf(path)`` la valeur d'une autre champ
+- ``state`` l'état du champ
+- ``stateOf(path)`` l'état d'un autre champ
+
+Le réel gain des signal form, c'est leur réactivité, qui permet de s'abstenir d'écrire du code complexe. Nul besoin d'utiliser de la souscription ou de l'appel de `updateValueAndValidity()` (détail dans l'article de angular love).
 
 ### 5. Création de signaux dérivés
 
@@ -81,8 +115,10 @@ export class Order {
 ```
 
 ```ts
-    @if (orderForm.couponCode().disabled()) {
-      <p class="info">Coupon code is only available for orders over $50</p>
-      }
-    ```
+@if (orderForm.couponCode().disabled()) {
+  <p class="info">Coupon code is only available for orders over $50</p>
+}
+```
+## submit
 
+Un exemple dans le fichier [app.component.ts](./src/app/app.component.ts)
