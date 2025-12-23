@@ -59,19 +59,17 @@ resource()
 
 ### Directive :
 
-#### [Directive](https://github.com/iliasse-e/angular_review/tree/directive)
+- #### [Directive](https://github.com/iliasse-e/angular_review/tree/directive)
 
-An exemple of a custom directive :
-
-#### [Directive click outside](https://github.com/iliasse-e/angular-review/tree/click-outside-directive)
+- #### [Directive click outside | custom directive](https://github.com/iliasse-e/angular-review/tree/click-outside-directive)
 
 ### [Router](https://github.com/iliasse-e/angular_review/tree/router)
 
 ### Forms :
 
-#### [Forms](https://github.com/iliasse-e/angular_review/tree/forms)
+- #### [Forms](https://github.com/iliasse-e/angular_review/tree/forms)
 
-#### [Signal Forms](https://github.com/iliasse-e/angular_review/tree/signal-form)
+- #### [Signal Forms (Angular 21 | expérimental)](https://github.com/iliasse-e/angular_review/tree/signal-form)
 
 
 ### [RxJS](https://github.com/iliasse-e/angular_review/tree/rxjs)
@@ -82,13 +80,12 @@ An exemple of a custom directive :
 
 ### Testing :
 
-#### [Testing harness](https://github.com/iliasse-e/angular_review/tree/harness_testing)
+- #### [Testing harness](https://github.com/iliasse-e/angular_review/tree/harness_testing)
 
-#### [Testing library](https://github.com/iliasse-e/angular_review/tree/testing-library)
+- #### [Testing library](https://github.com/iliasse-e/angular_review/tree/testing-library)
 
-End to end & component testing :
 
-#### [Cypress](https://github.com/iliasse-e/angular_review/tree/cypress)
+- #### [Cypress | E2E](https://github.com/iliasse-e/angular_review/tree/cypress)
 
 ### HTTP Client
 
