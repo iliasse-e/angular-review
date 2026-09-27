@@ -15,6 +15,29 @@ Ici, on check les composants :
 
 [Select spec file](./src/app/select/select.component.spec.ts)
 
+
+## Query / cibler un élément de l'écran
+
+La bibli met à disposition un ensemble de `Queries` permettant de cibler un élément de l'écran (get, find, query...) (byRole, byText, ...)
+
+## userEvent : la précision
+
+`userEvent` est un outil, qui permet de simuler le comportement utiliser des actions.
+
+Problème : Un simple `checkbox.click()` en JS natif ne simule souvent que l'événement click sec.
+
+Ce que fait `userEvent` : Fidélité au navigateur, quand un utilisateur click, en réalité un crée un ensemble d'actions en cascade (pointerover / mouseover, pointerdown / mousedown, focus, pointerup / mouseup, click).
+
+S'accompagnent aussi automatiquement d'un tour de détection de changements (ChangeDetectionRef / fixture.detectChanges()), ce qui évite d'avoir à appeler manuellement des rafraîchissements de vue après chaque action.
+
+Il existe aussi `fireEvent` que fournit la bibli, mais qui effectue seulement une seule action du DOM.
+
+## Les utilitaires d'attente
+
+    `waitFor` : Exécute un bloc de code à plusieurs reprises jusqu'à ce que les assertions à l'intérieur ne lèvent plus d'erreur ou que le délai d'attente (timeout) soit dépassé.
+
+   `waitForElementToBeRemoved` : Attend qu'un élément présent dans le DOM disparaisse (ex. un spinner de chargement).
+
 ## Logger
 
 ### `screen.logTestingPlaygroundURL()`
