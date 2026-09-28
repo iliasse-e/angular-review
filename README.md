@@ -33,12 +33,12 @@ const loginForm = form(loginModel);
 loginForm.email;
 loginForm.password;
 ```
-### 3. la directive `[field]`
+### 3. la directive `[formField]`
 
 On relie les <input> avec une simple directive ``[field]`` et non plus avec les directives multiples de `ReactiveForm`.
 
 ```typescript
-<input type="text" [field]="profileForm.firstName">
+<input type="text" [formField]="profileForm.firstName">
 ```
 ### 4. Validateurs
 
@@ -52,6 +52,8 @@ import {form, Field, required, email} from '@angular/forms/signals';
 loginForm = form(this.loginModel, (fieldPath) => {
   required(fieldPath.email, {message: 'Email is required'});
   email(fieldPath.email, {message: 'Enter a valid email address'});
+  min(fieldPath.age, 1);
+  max(fieldPath.age, 99);
 });
 ```
 
@@ -61,6 +63,22 @@ Le formulaire offrira des méthodes accesseurs comme : `.invalid()`, `.dirty()`,
 (mais aussi des nouvelles comme `.hidden()`, `.disabledReasons()`).
 
 Ainsi que des méthodes mutateurs comme : `.reset()`, `.markAsDirty()`.
+
+#### .errors()
+```
+l'accesseur `errors` permet de récupérer un tableau d'erreur relatif à un controleur.
+
+`kind` permet d'identifier le type d'erreur
+
+@if (simpleForm.age().errors().some(e => e.kind === 'min')) {
+  Age must be at least 1
+}
+```
+Le tableau d'errors
+```
+simpleForm.age().errors() // [{ kind: "min", message: "Age must be at least 1", min: 1, … }]
+```
+
 
 ### Validateurs customs
 
