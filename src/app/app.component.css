@@ -1,28 +1,211 @@
+/* --- LAYOUT GLOBAL --- */
 :host {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1e293b;
+  background-color: #f8fafc;
+  display: block;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.app-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.card-grid {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.recommendations-card {
+  width: 33%;
+}
+
+@media (min-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+}
+
+/* --- CARTES --- */
+.product-card, .recommendations-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -2px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+}
+
+.card-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+  color: #0f172a;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+/* --- FORMULAIRES --- */
+.form-group {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #334155;
+}
+
+.modern-select, .modern-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background-color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.modern-select:focus, .modern-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* --- RÉSUMÉ & PRIX --- */
+.summary-box {
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cart-text {
+  font-size: 0.9rem;
+  color: #475569;
+  margin: 0;
+}
+
+.price-display {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
 }
 
-#recommendations-bloc {
-    height: 100vh;
-    overflow-y: scroll;
-    width: 30%;
+.price-value {
+  color: #4f46e5;
+  font-size: 1.35rem;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  grid-gap: 20px;
-  width: 50%;
+.product-details {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #cbd5e1;
 }
 
-.card {
-  display: grid;
-  grid-template-rows: max-content 200px 1fr;
+.product-details h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #334155;
 }
 
-.card img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+.product-details p, .empty-hint {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
 }
+
+.empty-hint {
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* --- SKELETON LOADER (SHIMMER EFFECT) --- */
+.recommendations-card h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: #1e293b;
+}
+
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skeleton-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.skeleton-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  flex-shrink: 0;
+  animation: shimmer 1.5s infinite linear;
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+}
+
+.skeleton-lines {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.line {
+  height: 12px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.line.short {
+  width: 40%;
+}
+
+.line.long {
+  width: 80%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.loading-state, .error-text {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.875rem;
+  padding: 2rem 0;
+}
+
+
