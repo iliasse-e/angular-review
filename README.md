@@ -37,12 +37,13 @@ References
 
 Event listeners
 
-@defer
-
 ng-template
 
 ng-content
 ```
+
+- ### [Lazy load bundles with @defer](https://github.com/iliasse-e/angular-review/tree/defer)
+
 ### [Signals](https://github.com/iliasse-e/angular_review/tree/signal)
 
 ```typescript
