@@ -97,3 +97,5 @@ resource()
 ### i18n
 
 ### Other
+
+- #### [Worker](https://github.com/iliasse-e/angular_review/tree/worker)
