@@ -1,32 +1,49 @@
-# Description
+Voici une version traduite, enrichie et structurée de ton README. J'y ai intégré l'ensemble des concepts fondamentaux que nous avons vus (l'intérêt du DI pour le découplage et les tests, l'explication des portées/singletons, et l'ajout indispensable des fournisseurs avancés comme `InjectionToken`, `useValue` et `useFactory` pour les valeurs non-classes).
 
-ependency injection, or DI, is one of the fundamental concepts in Angular. DI is wired into the Angular framework and allows classes with Angular decorators, such as Components, Directives, Pipes, and Injectables, to configure dependencies that they need.
+---
 
-Two main roles exist in the DI system: dependency consumer and dependency provider.
+# L'Injection de Dépendances (DI) dans Angular
 
-Angular facilitates the interaction between dependency consumers and dependency providers using an abstraction called `Injector`. When a dependency is requested, the injector checks its registry to see if there is an instance already available there. If not, a new instance is created and stored in the registry. Angular creates an application-wide injector (also known as the "root" injector) during the application bootstrap process.
+## Introduction & Concept Fondamental
 
-## Providing a dependency
+L'**Injection de Dépendances (Dependency Injection ou DI)** est l'un des piliers fondamentaux d'Angular. C'est un design pattern qui permet à une classe (comme un composant ou un service) de **ne pas créer elle-même** ses dépendances (en évitant les `new MonService()`).
 
-The first step is to add the `@Injectable` decorator to show that the class can be injected.
+À la place, ces dépendances lui sont **fournies (injectées)** de l'extérieur par le framework.
+
+* **Pourquoi c'est crucial ?** Cela supprime le couplage fort entre les classes, rend le code modulaire, et facilite grandement les tests unitaires (en injectant de faux services ou *mocks*).
+
+Le système repose sur deux acteurs principaux :
+
+1. **Le consommateur de dépendance** (qui a besoin du service).
+2. **Le fournisseur de dépendance** (qui déclare comment instancier le service).
+
+Angular fait le lien entre les deux grâce à une abstraction appelée **`Injector`**. Lorsqu'un composant demande un service, l'injecteur vérifie s'il existe déjà une instance disponible dans son registre. Si ce n'est pas le cas, il la crée, la stocke et la transmet.
+
+---
+
+## 1. Fournir une dépendance (Declarer un provider)
+
+La première étape consiste à utiliser le décorateur `@Injectable` pour indiquer qu'une classe peut recevoir des dépendances ou être injectée.
 
 ```typescript
-@Injectable()
+@Injectable() // @Service depuis Angular 21/22
 class HeroService {}
+
 ```
 
-###  Preferred: At the application root level using `providedIn` 
+### Option A : Au niveau racine avec `providedIn` (Recommandé)
 
 ```typescript
-@Injectable({  providedIn: 'root'})
+@Injectable({ providedIn: 'root' }) // Dans Angular 22, par defaut c'est providedIn: 'root'
 class HeroService {}
+
 ```
 
-When you provide the service at the root level, Angular creates a single, shared instance of the HeroService and injects it into any class that asks for it.
+* **Comportement :** Angular crée une instance unique et partagée (**Singleton**) de `HeroService` pour toute l'application. De plus, cela permet le **Tree-Shaking** (si le service n'est utilisé nulle part, il est automatiquement supprimé du bundle final de production).
 
-###  At the Component level
+### Option B : Au niveau d'un Composant
 
-You can provide services at `@Component` level by using the `providers` field of the `@Component` decorator. In this case the `HeroService` becomes available to all instances of this component and other components and directives used in the template.
+Tu peux fournir un service directement dans le tableau `providers` d'un composant :
 
 ```typescript
 @Component({
@@ -35,55 +52,100 @@ You can provide services at `@Component` level by using the `providers` field of
   providers: [HeroService]
 })
 class HeroListComponent {}
+
 ```
 
-When you register a provider at the component level, you get a new instance of the service with each new instance of that component.
+* **Comportement :** Chaque nouvelle instance de ce composant créera **une nouvelle instance indépendante** du service (ce n'est donc plus un singleton). C'est utile pour isoler l'état d'un composant, mais attention aux effets de bord sur le state partagé !
 
-### At the application root level using `ApplicationConfig`
+### Option C : Au niveau global avec `ApplicationConfig`
 
-You can use the `providers` field of the `ApplicationConfig` (passed to the `bootstrapApplication` function) to provide a service or other `Injectable` at the application level.
-
-In the example below, the `HeroService` is available to all components, directives, and pipes:
+Tu peux déclarer des providers dans l'objet `ApplicationConfig` passé à la fonction de bootstrap :
 
 ```typescript
 export const appConfig: ApplicationConfig = {
     providers: [
-      { provide: HeroService },
+      HeroService,
     ]
 };
+
 ```
 
-
-Then, in `main.ts`:
+Puis dans `main.ts` :
 
 ```typescript
 bootstrapApplication(AppComponent, appConfig)
+
 ```
 
-## Injecting/consuming a dependency
+---
 
-Use Angular's `inject` function to retrieve dependencies.
+## 2. Aller plus loin : Les fournisseurs avancés (`InjectionToken`, `useValue`, `useFactory`)
 
-```ts
-import {inject, Component} from 'angular/core';
+Par défaut, Angular utilise des classes. Mais comment injecter des valeurs brutes (une URL d'API, un objet de configuration, un booléen) ou instancier des services dynamiquement ? On utilise pour cela un **`InjectionToken`** associé à `useValue` ou `useFactory`.
+
+### `InjectionToken` et `useValue` (Pour les valeurs statiques / configurations)
+
+```typescript
+// 1. On crée un token typé
+export const API_CONFIG = new InjectionToken<string>('api.config');
+
+// 2. On le fournit avec useValue
+export const appConfig: ApplicationConfig = {
+    providers: [
+      { provide: API_CONFIG, useValue: 'https://api.monsite.com' }
+    ]
+};
+
+// 3. On l'injecte dans un composant/service
+const apiUrl = inject(API_CONFIG);
+
+```
+
+### `useFactory` (Pour l'instanciation dynamique)
+
+Utile lorsque la création du service dépend d'une logique conditionnelle (par exemple, selon l'environnement de production ou le localStorage) :
+
+```typescript
+const loggerFactory = () => {
+  const isProd = environment.production;
+  return isProd ? new RemoteLogger() : new ConsoleLogger();
+};
+
+export const appConfig: ApplicationConfig = {
+    providers: [
+      { provide: Logger, useFactory: loggerFactory }
+    ]
+};
+
+```
+
+---
+
+## 3. Consommer / Injecter une dépendance
+
+Utilise la fonction moderne `inject()` d'Angular pour récupérer tes dépendances :
+
+```typescript
+import { inject, Component } from '@angular/core';
 
 @Component({/* ... */})
 export class UserProfile {
-  // You can use the `inject` function in property initializers.
+  // Utilisation dans l'initialiseur de propriété
   private userClient = inject(UserClient);
 
   constructor() {
-    // You can also use the `inject` function in a constructor.
+    // Ou utilisation dans le constructeur
     const logger = inject(Logger);
   }
 }
+
 ```
 
-You can use the `inject` function in any [injection context](guide/di/dependency-injection-context). Most of the time, this is in a class property initializer or a class constructor for components, directives, services, and pipes.
+> **Règle d'or du contexte d'injection :** La fonction `inject()` doit **toujours** être appelée dans un **contexte d'injection synchrone** (propriété de classe ou constructeur). Il est strictement interdit de l'appeler après un `await` ou à l'intérieur d'un `setTimeout`, car Angular perdrait la trace du contexte d'exécution.
 
-When Angular discovers that a component depends on a service, it first checks if the injector has any existing instances of that service. If a requested service instance doesn't yet exist, the injector creates one using the registered provider, and adds it to the injector before returning the service to Angular.
+---
 
-When all requested services have been resolved and returned, Angular can call the component's constructor with those services as arguments.
+## Résumé du fonctionnement de l'Injecteur
 
 ```mermaid
 graph TD;
@@ -97,4 +159,5 @@ direction TB
 componentProperty["Component <br> heroService = inject(HeroService)"]
 heroService-->componentProperty
 style componentProperty text-align: left
+
 ```
