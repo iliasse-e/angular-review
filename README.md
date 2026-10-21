@@ -157,3 +157,43 @@ heroService-->componentProperty
 style componentProperty text-align: left
 
 ```
+
+## Fonctionne de l'injecteur
+
+Il y a un concept fondamental sous le capot qu'il faut absolument maîtriser pour ne pas se faire surprendre par des bugs bizarres en Angular : **la hiérarchie et le fonctionnement des injecteurs**.
+
+Contrairement à ce qu'on pourrait penser, il n'y a pas un seul injecteur global dans Angular, mais **un arbre d'injecteurs**.
+
+Voici ce qu'il faut savoir sur l'injecteur (`Injector`) :
+
+---
+
+### 1. La double hiérarchie : Environment Injector vs Element Injector
+
+Depuis les versions récentes d'Angular, l'arbre des injecteurs est divisé en deux branches distinctes :
+
+* **L'Environment Injector (anciennement Module Injector) :**
+* C'est l'injecteur global de l'application (créé au démarrage via `bootstrapApplication` ou `providedIn: 'root'`).
+* Il vit pendant toute la durée de vie de l'application. C'est ici que résident les **Singletons**.
+
+
+* **L'Element Injector (lié au DOM / Composants) :**
+* Il est créé automatiquement **pour chaque composant** qui possède son propre tableau `providers: [...]`.
+* Il vit et meurt avec le composant. Si le composant est détruit (ex: un `*ngIf` ou `@if` qui le masque), l'instance du service associée est détruite aussi.
+
+
+
+---
+
+### 2. Comment Angular cherche un service ? (Le mécanisme de résolution)
+
+Quand un composant demande un service (via `inject(MonService)` ou le constructeur), Angular effectue une recherche selon un **sens unique (du bas vers le haut)** :
+
+1. **L'Element Injector du composant actuel :** Est-ce que le service est déclaré dans les `providers` de ce composant ? Si oui, il l'utilise.
+2. **On remonte l'arbre des composants parents :** Si non, Angular regarde dans l'Element Injector du composant parent, puis du grand-parent, et ainsi de suite dans le DOM.
+3. **L'Environment Injector racine :** Si aucun composant parent ne l'a fourni, Angular finit par regarder dans l'injecteur global (`root`).
+4. **Le crash (`NullInjectorError`) :** Si le service n'est trouvé nulle part après avoir atteint le sommet de l'arbre, Angular lève la célèbre erreur : `NullInjectorError: No provider for MonService!`.
+
+> **Piège classique :** Si tu oublies de mettre `providedIn: 'root'` sur un service *et* que tu ne le déclares nulle part dans les `providers` d'un composant, c'est ce mécanisme de remontée qui échoue, provoquant le crash au runtime.
+
+---
