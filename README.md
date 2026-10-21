@@ -1,7 +1,3 @@
-Voici une version traduite, enrichie et structurée de ton README. J'y ai intégré l'ensemble des concepts fondamentaux que nous avons vus (l'intérêt du DI pour le découplage et les tests, l'explication des portées/singletons, et l'ajout indispensable des fournisseurs avancés comme `InjectionToken`, `useValue` et `useFactory` pour les valeurs non-classes).
-
----
-
 # L'Injection de Dépendances (DI) dans Angular
 
 ## Introduction & Concept Fondamental
