@@ -73,7 +73,7 @@ resource()
 
 ### [RxJS](https://github.com/iliasse-e/angular_review/tree/rxjs)
 
-### [Dependancy injection](https://github.com/iliasse-e/angular_review/tree/dependency-injection)
+### [Dependency injection](https://github.com/iliasse-e/angular_review/tree/dependency-injection)
 
 ### [NGRX](https://github.com/iliasse-e/ngrx)
 
